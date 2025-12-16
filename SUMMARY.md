@@ -2,6 +2,10 @@
 
 * [Welcome](README.md)
 
+## Onboarding
+
+* [Prerequisites](onboarding/prerequisites.md)
+
 ## Getting Started
 
 * [Quickstart](getting-started/quickstart.md)
