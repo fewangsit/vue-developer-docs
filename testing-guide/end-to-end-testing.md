@@ -19,7 +19,7 @@ Create test files under the `cypress/e2e` directory. Use the custom commands to 
 #### Example Test: `Example.cy.spec.ts` <a href="#example-test-examplecyspects" id="example-test-examplecyspects"></a>
 
 ```typescript
-Copydescribe('Example Test', () => {
+describe('Example Test', () => {
   beforeEach(() => {
     cy.login();
     cy.visit('/');
