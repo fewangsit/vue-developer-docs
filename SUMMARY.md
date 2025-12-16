@@ -30,3 +30,9 @@
 * [Documenting Code](style-guide/documenting-code.md)
 * [Git Conventional Commits](style-guide/git-conventional-commits.md)
 * [VS Code](style-guide/vs-code.md)
+
+## Testing Guide
+
+* [Intro](testing-guide/intro.md)
+* [End To End Testing](testing-guide/end-to-end-testing.md)
+* [Unit Testing](testing-guide/unit-testing.md)
