@@ -2,6 +2,7 @@
 description: >-
   This tutorial will guide you through your first steps as a front-end
   programmer.
+icon: receipt
 ---
 
 # Prerequisites

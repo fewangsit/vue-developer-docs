@@ -5,6 +5,7 @@
 ## Onboarding
 
 * [Prerequisites](onboarding/prerequisites.md)
+* [Cloning Repositories](onboarding/cloning-repositories.md)
 
 ## Getting Started
 
