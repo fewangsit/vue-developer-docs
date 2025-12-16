@@ -1,3 +1,8 @@
+---
+noIndex: true
+icon: globe-pointer
+---
+
 # End To End Testing
 
 Create test files under the `cypress/e2e` directory. Use the custom commands to interact with elements and perform actions.

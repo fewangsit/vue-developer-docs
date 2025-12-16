@@ -1,3 +1,8 @@
+---
+noIndex: true
+icon: function
+---
+
 # Unit Testing
 
 For unit tests, place files under the `cypress/unit` directory. Use the same file name as the code file being tested, following PascalCase for consistency.
