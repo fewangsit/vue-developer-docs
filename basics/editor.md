@@ -1,4 +1,5 @@
 ---
+noIndex: true
 icon: pen-to-square
 layout:
   width: default
