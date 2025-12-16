@@ -129,6 +129,7 @@ defineExpose({
   componentMethod,
 });
 </script>
+
 <template>
   <Button @click="componentMethod">Click</Button>
 </template>

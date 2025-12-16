@@ -1,3 +1,7 @@
+---
+noIndex: true
+---
+
 # Cloning Repositories
 
 There are a couple of repositories that you should clone:
