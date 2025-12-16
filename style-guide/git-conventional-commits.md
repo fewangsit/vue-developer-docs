@@ -5,6 +5,8 @@ icon: code-commit
 
 # Git Conventional Commits
 
+### 1. Commit Types
+
 When making commits, follow these guidelines for clear communication about the nature of the changes.
 
 * **fix**: Resolve an error or bug.
@@ -16,6 +18,8 @@ When making commits, follow these guidelines for clear communication about the n
 * **test**: Changes related to testing.
 * **style**: Changes related to design, such as background color.
 
+### 2. Commit Format
+
 ```bash
 <type>(Commit Scope): <short description>
 
@@ -23,6 +27,8 @@ When making commits, follow these guidelines for clear communication about the n
 
 [Optional Footer or Breaking Change Note]
 ```
+
+### 3. Example
 
 ```bash
 fix(A5xw3u3K): bulk action not properly works

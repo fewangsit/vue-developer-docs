@@ -7,9 +7,9 @@ icon: brackets-curly
 
 Follow these rules to keep our code looking the same across all projects and for everyone writing code. Make sure to stick to these guidelines for a consistent and easy-to-understand coding style.
 
-### 6.1 Naming Convention
+### 1. Naming Convention
 
-#### 6.1.1 File Naming
+#### 1.1 File Naming
 
 * `PascalCase` for SFC file and Module Folder.
 * `camelCase` for all TypeScript `.ts` files, including type, dto, util, etc.
@@ -38,7 +38,7 @@ Follow these rules to keep our code looking the same across all projects and for
     tagRFID.dto.ts
     ```
 
-#### 6.1.2 Folder Structure & Component File Naming Convention
+#### 1.2 Folder Structure & Component File Naming Convention
 
 When creating folder structures for components within a module, follow a hierarchical approach where the most common scope appears first, followed by more specific sub-scopes. This ensures clarity, consistency, and scalability in larger applications.
 
@@ -73,7 +73,7 @@ Given the example of the "Borrow" module with its submodules, the folder structu
     BorrowedItemDetail.vue       // Detailed view of a borrowed item
 ```
 
-#### **6.1.3 Variable Naming Conventions**
+#### 1.3 Variable Naming Conventions
 
 To ensure readability, maintainability, and consistency across your codebase, follow these naming conventions:
 
@@ -125,11 +125,11 @@ By following these naming conventions, you will make your code more intuitive, e
 
 ***
 
-### **6.2 Component Template Guidelines**
+### 2. Component Template Guidelines
 
 To maintain clarity and readability in Vue templates, adhere to these conventions:
 
-#### **6.2.1 HTML Tags and Attributes**
+#### 2.1 HTML Tags and Attributes
 
 Use **lowercase** for all native HTML tags and attributes to differentiate them from custom components.
 
@@ -143,7 +143,7 @@ Use **lowercase** for all native HTML tags and attributes to differentiate them 
 
 ***
 
-#### **6.2.2 Component Tags**
+#### 2.2 Component Tags
 
 Use **PascalCase** for custom component tags.
 
@@ -162,7 +162,7 @@ Use **kebab-case** for Vue built-in components and Vue Router components.
 
 ***
 
-#### **6.2.3 Avoid Complex Expressions in Templates**
+#### 2.3 Avoid Complex Expressions in Templates
 
 Avoid writing complex expressions directly in the template as it makes the code harder to read and debug.
 
@@ -212,9 +212,9 @@ Move such computations to **computed properties** or **functions** in the `<scri
 
 ***
 
-### **6.3 The Script Setup & TypeScript Code**
+### 3. The Script Setup & TypeScript Code
 
-#### **6.3.1 Defining Props**
+#### 3.1 Defining Props
 
 In the Composition API, props can be defined using either type-based declaration or runtime declaration.
 
@@ -288,7 +288,7 @@ By following these guidelines, you ensure consistency, clarity, and efficiency i
 
 ***
 
-#### **6.3.2 Defining Emits**
+#### 3.2 Defining Emits
 
 Similar to `defineProps`, you can define emits in the `<script setup>` block using either type-based or runtime declaration. However, **type-based declarations are preferred** for defining emits due to their conciseness.
 
@@ -346,7 +346,7 @@ By following these guidelines, you ensure clear and concise emit definitions and
 
 ***
 
-#### **6.3.3 Creating** Reactive Variables
+#### 3.3 Creating Reactive Variables
 
 When working with reactivity in Vue with TypeScript, it’s important to follow best practices to ensure clarity, maintainability, and performance.
 
@@ -515,7 +515,7 @@ By following these updated rules, you ensure that your reactivity setup is both 
 
 ***
 
-#### 6.3.4 Creating Non-Reactive Constant Variables
+#### 3.4 Creating Non-Reactive Constant Variables
 
 Here are examples for using **plain** `const` declarations for non-reactive primitive types, raw objects, and other common constants in Vue applications. As with the reactive variables, you should always define the types even if it can be auto-inferred.
 
@@ -576,7 +576,7 @@ const ORDER_STATUSES: Record<OrderStatus, string> = {
 
 ***
 
-#### 6.3.5 Writing Computed Variables
+#### 3.5 Writing Computed Variables
 
 * **Use** `const` to ensure immutability of the reference.
 * Follow **camelCase** naming conventions.
@@ -596,7 +596,7 @@ const computedString = computed<string>(() => {
 
 ***
 
-#### 6.3.6 Creating Component Functions
+#### 3.6 Creating Component Functions
 
 * Use **arrow functions**.
 * Follow **camelCase** naming conventions.
@@ -611,13 +611,13 @@ const logMessage = (message: string): void => console.log(message);
 
 ***
 
-#### 6.3.7 Don't use `var`
+#### 3.7 Don't use `var`
 
 No comment, just avoid using `var`.
 
 ***
 
-#### 6.3.8 Use `let` Only in Block Scope
+#### 3.8 Use `let` Only in Block Scope
 
 Use `let` only inside block or function scopes. Avoid using it in global scope to ensure proper scoping and prevent unexpected behavior.
 
@@ -660,7 +660,7 @@ let count = 0;  // Avoid using `let` in the global scope of the script
 
 ***
 
-#### 6.3.9 Don't Ignore ESLint and SonarLint Warnings
+#### 3.9 Don't Ignore ESLint and SonarLint Warnings
 
 Always address warnings and errors from **ESLint** and **SonarLint**. These tools help maintain code quality by enforcing consistent style and catching potential issues.
 
@@ -668,7 +668,7 @@ By addressing the warnings and fixing them, you ensure cleaner, more maintainabl
 
 ***
 
-#### 6.3.10 Avoid Installing New Libraries Unless You Really Need Them
+#### 3.10 Avoid Installing New Libraries Unless You Really Need Them
 
 Try to write your code using plain TypeScript or libraries you already have.
 
@@ -699,7 +699,7 @@ console.log(formatDateWithLocale(now)); // Outputs: 12/13/2024 09:15:30
 
 ***
 
-#### 6.3.11: Don't Hardcode URLs or Sensitive Data
+#### 3.11 Don't Hardcode URLs or Sensitive Data
 
 Sensitive information, like API keys or API URLs, should never be hardcoded in your source code. Instead:
 
@@ -710,7 +710,7 @@ This ensures security, makes configuration flexible, and avoids exposing credent
 
 ***
 
-#### 6.3.12: Use Template Literals with Backticks
+#### 3.12 Use Template Literals with Backticks
 
 When combining strings or embedding variables, prefer **template literals** (backticks `` ` ``) over traditional string concatenation (`+`).
 
@@ -738,7 +738,7 @@ const message = `Hello, ${name}! Welcome to ${new Date().getFullYear()}.`;
 
 ***
 
-### **6.4 Creating API Services**
+### 4. Creating API Services
 
 Our front-end application communicates with backend services through REST APIs. We use Axios to simplify and make all API requests more efficient.
 
@@ -748,7 +748,7 @@ Follow our guidelines for creating service files:
 
 ***
 
-#### **6.4.1 Importing Necessary Modules**
+#### 4.1 Importing Necessary Modules
 
 Import only the necessary modules to keep the service files clean.
 
@@ -759,7 +759,7 @@ import createAxiosInstance from './createInstance';
 
 ***
 
-#### **6.4.2 Creating the Axios Instance**
+#### 4.2 Creating the Axios Instance
 
 Create the Axios instance using the `createAxiosInstance` function, which is designed to configure and initialize the Axios client for your application.
 
@@ -777,7 +777,7 @@ const API = createAxiosInstance({ env: 'APP_EXAMPLE_API', prefix: '/api' });
 
 ***
 
-#### **6.4.3 Creating the Service Object**
+#### 4.3 Creating the Service Object
 
 Create a service object to group related API request methods. Ensure each method is separated by a single line for clarity. Each method should use arrow functions and return a `Promise<AxiosResponse>`.
 
@@ -855,7 +855,7 @@ export interface FetchDetailResponse<T = Data> {
 
 ***
 
-#### **6.4.4 Service Method Naming and Conventions**
+#### 4.4 Service Method Naming and Conventions
 
 * **Use PascalCase** for the service object name.
 * **Separate each object method with a single line spacing** for readability.
@@ -882,7 +882,7 @@ export interface FetchDetailResponse<T = Data> {
 
 ***
 
-#### **6.4.5 Exporting the Service**
+#### 4.5 Exporting the Service
 
 Finally, export the service object as the default export of the module.
 
@@ -899,7 +899,7 @@ export { default as ExampleService } from './src/services/example.service';
 
 ***
 
-#### **6.4.6 Type Definitions: DTO and Types Folders**
+#### 4.6 Type Definitions: DTO and Types Folders
 
 Ensure that type definitions for request and response bodies are separated and placed in appropriate folders for clarity and reusability.
 
@@ -951,13 +951,13 @@ export interface GetDetailResponseBody {
 
 ***
 
-### **6.5 Using the API Method from Services**
+### 5. Using the API Method from Services
 
 After creating the API service, as covered in the previous section, you can now implement the API methods in your `script setup`. Follow the rules below to ensure consistency and maintain best practices:
 
 ***
 
-#### **6.5.1 Rules for Using API Methods**
+#### 5.1 Rules for Using API Methods
 
 1.  **Import the Service Object**\
     Use the same name as the Service Object created in the service file. For example, if you created `ExampleService`, import it as follows:
@@ -1016,7 +1016,7 @@ After creating the API service, as covered in the previous section, you can now 
 
 ***
 
-#### **6.5.2 Complete Example: Using an API Method**
+#### 5.2 Complete Example: Using an API Method
 
 Below is an example implementation of the `getExampleDetail` method using the `ExampleService` and `shallowRef` for storing the data response:
 
@@ -1056,11 +1056,11 @@ We use `shallowRef` for storing API response data like `exampleDetail` because i
 
 ***
 
-### **6.6 Creating Vue Router Configuration File**
+### 6. Creating Vue Router Configuration File
 
 The `router` folder should contain only one `index.ts` configuration file. Here are the rules you need to follow when writing the router configuration.
 
-#### **6.6.1 Rules for Writing Router Configuration**
+#### 6.1 Rules for Writing Router Configuration
 
 **1. Import Necessary Types and Methods**
 
@@ -1125,7 +1125,7 @@ In this example:
 
 ***
 
-#### **6.6.2 Example Router Configuration**
+#### 6.2 Example Router Configuration
 
 Here is an example implementation of the `index.ts` file in the `router` folder:
 
@@ -1160,7 +1160,7 @@ export default router;
 
 ***
 
-### **6.7 Working with Provide / Inject**
+### 7. Working with Provide / Inject
 
 To ensure consistency and maintainability when using Vue's `provide` and `inject` features, it is essential to establish clear standards. These standards will help developers avoid common pitfalls such as naming collisions or untyped injections.
 
@@ -1168,13 +1168,13 @@ Below is a standardized approach to using `provide` and `inject`, with a focus o
 
 ***
 
-#### **6.7.1 What is an Injection Key?**
+#### 7.1 What is an Injection Key?
 
 An Injection Key is a strongly typed symbol or unique identifier used for `provide` and `inject`. It ensures that the injected values are type-safe and prevents accidental naming conflicts.
 
 ***
 
-#### **6.7.2 Rules for Using Provide / Inject with Injection Keys**
+#### 7.2 Rules for Using Provide / Inject with Injection Keys
 
 **1. Use Symbols as Injection Keys**
 
@@ -1288,7 +1288,7 @@ export const ExampleKey: InjectionKey<ExampleType> = Symbol();
 
 ***
 
-#### **6.7.3 Example Usage**
+#### 7.3 Example Usage
 
 **Centralized Injection Key File**
 
@@ -1344,7 +1344,7 @@ console.log(exampleValue?.value.exampleProperty); // We need to access .value be
 
 ***
 
-#### **6.7.4 Benefits of Using Injection Keys**
+#### 7.4 Benefits of Using Injection Keys
 
 1. **Type Safety**: Strong typing reduces bugs and improves developer productivity.
 2. **Uniqueness**: Symbols prevent key name collisions.
@@ -1353,19 +1353,19 @@ console.log(exampleValue?.value.exampleProperty); // We need to access .value be
 
 By following these standards, your use of `provide` and `inject` will be robust, maintainable, and aligned with Vue's best practices.
 
-### 6.9 Environment Variables (.env)
+### 8. Environment Variables (.env)
 
-#### 6.9.1 Prefix
+#### 8.1 Prefix
 
 * All environment variables should begin with either `VUE_APP_` for Production Build or `VITE_APP_` for development.
 
-#### 6.9.2 Naming
+#### 8.2 Naming
 
 * Variable names should be closely match their values.
 * **Example:**
   * **Avoid:** `VUE_APP_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com`
   * **Prefer:** `VUE_APP_SETTINGS_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com`
 
-#### 6.9.3 Consistency
+#### 8.3 Consistency
 
 If a variable exists with one prefix, its counterpart with the other prefix should also be defined.

@@ -45,25 +45,25 @@ Now let's break down what folder and what the usages.
 
 ***
 
-### 4.1 `src > assets`
+### 1. `src > assets`
 
 We store our assets like images and styles files here.
 
 ***
 
-### 4.2 `components > commons`
+### 2. `components > commons`
 
 Components stored in the commons directory are designed for widespread usage throughout the project. These are reusable components utilized in multiple locations, promoting code efficiency and maintainability.
 
 ***
 
-### 4.3 `components > module`
+### 3. `components > module`
 
 This folder is designated for organizing components based on specific pages, menus, or functions. Components within this directory are grouped according to their association with particular pages, menus, or functionalities. This structuring approach enhances the organization and maintainability of our codebase, making it easier to locate and manage components within the context of their usage.
 
 ***
 
-### 4.4 `components > module > helpers`
+### 4. `components > module > helpers`
 
 This folder contains function used by the components inside the module.
 
@@ -83,13 +83,13 @@ Bellow is the guidelines:
 
 ***
 
-### 4.4 `components > module > options`
+### 5. `components > module > options`
 
 Within the `module` directory, the `options` folder stores TypeScript (TS) files essential for the components. These files contain configurations and options necessary for the proper functioning of the associated components. We mainly store the filter options.
 
 ***
 
-### 4.5 `dto`
+### 6. `dto`
 
 The word `dto` stands for `data transfer object`, is the folder containing TypeScript interfaces that will be used to determine the type of query parameters or body while fetching or sending data to the API services.
 
@@ -137,7 +137,7 @@ Creating DTO files, you need to follow these rules:
 
 ***
 
-### 4.6 `types`
+### 7. `types`
 
 Similar to the `dto` folder, the `types` folder contains type declarations. However, it is specifically focused on entities beyond request bodies and parameters.
 
@@ -191,19 +191,19 @@ This structure ensures your type definitions are reusable, organized, and easy t
 
 ***
 
-### 4.7 `router/index.ts`
+### 8. `router/index.ts`
 
 The `router` folder stores the client-side routes (URLs) used by the application. It also details the components used by each route. You can read more details in the official [Vue Router guide](https://router.vuejs.org/guide/).
 
 ***
 
-### 4.8 `utils`
+### 9. `utils`
 
 The `utils` folder is a central place for storing utility functions used widely across different component modules. The convention for creating util files is to use `camelCase` followed by the extension `.util.ts`.
 
 ***
 
-### 4.9 `.env`
+### 10. `.env`
 
 The `.env` file is a configuration file used to manage environment variables in our Vue.js project. It lets us define key-value pairs, such as the base URL of the APIs.
 

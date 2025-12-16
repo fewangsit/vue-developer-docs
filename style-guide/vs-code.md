@@ -5,7 +5,7 @@ icon: vscode
 
 # VS Code
 
-### 9.1 Extensions
+### 1. Extensions
 
 **Necessary extensions**
 
@@ -25,7 +25,7 @@ icon: vscode
 
 ***
 
-### **9.2 Useful Shortcuts**
+### 2. Useful Shortcuts
 
 * **Ctrl + Space**: show suggestions for functions, objects, variables, and snippets. This is helpful if you want to quickly import a function from another file or a component from library, among other uses. Type the function or component you want to import, then press Ctrl + Space.
 * **Ctrl + Click** (while hovering over a symbol): Go to the definition of the symbol. Symbols are the classes, functions, types, and variable names in your code. For a component, you can also use this to go to the declaration file of the component, which contains what kind of props the component accepts.

@@ -9,7 +9,7 @@ In the previous section, we covered the project structure. This section will foc
 
 ***
 
-### 5.1 SFC - How to write clean Vue TypeScript Single File Components
+### 1. SFC - How to write clean Vue TypeScript Single File Components
 
 When creating an SFC (.vue) file, you **must** use the `PascalCase` naming convention.
 
@@ -139,7 +139,7 @@ defineExpose({
 
 Let's break it down into smaller parts.
 
-#### 5.1.1 The SFC Tags Arrangement
+#### 1.1 The SFC Tags Arrangement
 
 You should place the script tag at the top of the SFC, the template in the middle, and the style at the bottom.
 
@@ -159,7 +159,7 @@ So, your SFC file should look like this:
 
 ***
 
-#### 5.1.2 The Script Code Arrangement
+#### 1.2 The Script Code Arrangement
 
 First, ensure you type `<script setup lang="ts">` instead of `<script lang="ts" setup>`. Both are correct, but for consistency, use the first one.
 

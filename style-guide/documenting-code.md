@@ -7,7 +7,7 @@ icon: message-code
 
 Code comments should serve as **guides for clarity and maintenance**, avoiding redundancy and focusing on areas where the intent may not be immediately clear.
 
-### Key Points:
+### 1. Key Points
 
 1.  **Avoid Obvious Comments**:\
     Don't repeat what is already clear from the code.
@@ -89,9 +89,9 @@ Code comments should serve as **guides for clarity and maintenance**, avoiding r
 
 ***
 
-### Examples
+### 2. Examples
 
-#### **Bad Commenting (Redundant):**
+#### 2.1 Bad Commenting (Redundant)
 
 ```typescript
 // Returns the sum of two numbers
@@ -102,7 +102,7 @@ const add = (a: number, b: number): number => {
 
 The function name and implementation are self-explanatory, making these comments unnecessary.
 
-#### **Better Commenting**:
+#### 2.2 Better Commenting
 
 ```typescript
 /**
@@ -131,7 +131,7 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
 };
 ```
 
-#### **When to Comment Inline**:
+#### 2.3 When to Comment Inline
 
 Use inline comments sparingly for specific steps in complex logic.
 

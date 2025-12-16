@@ -5,7 +5,7 @@ icon: cube
 
 # Build Tool and Package Manager
 
-### **3.1 Webpack x Vite**
+### 1. Webpack x Vite
 
 Our project leverages both Webpack and Vite to maximize efficiency and performance across different stages of development:
 
@@ -16,6 +16,6 @@ By combining these tools, we can build efficiently in production while enjoying 
 
 ***
 
-### 3.2 PNPM
+### 2. PNPM
 
 PNPM is our chosen package manager for our micro-apps projects. It facilitates fast and deterministic dependency management, ensuring consistent package versions across development environments.
