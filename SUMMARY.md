@@ -30,6 +30,7 @@
 * [API Services](style-guide/api-services/README.md)
   * [Creating Axios Instance](style-guide/api-services/creating-axios-instance.md)
   * [Creating API Services](style-guide/api-services/creating-api-services.md)
+  * [Type Definitions](style-guide/api-services/type-definitions.md)
 * [Documenting Code](style-guide/documenting-code.md)
 * [Git Conventional Commits](style-guide/git-conventional-commits.md)
 * [VS Code](style-guide/vs-code.md)
