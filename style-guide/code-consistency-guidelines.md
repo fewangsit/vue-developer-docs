@@ -92,7 +92,7 @@ To ensure readability, maintainability, and consistency across your codebase, fo
      * `MAX_USER_COUNT`
      * `API_URL`
 4. **Descriptive Naming:**
-   * **Use meaningful names** that clearly describe the variable’s purpose.
+   * **Use meaningful names** that clearly describe the variable's purpose.
    * Avoid vague names like `data`, `temp`, `obj`, and `stuff`. Instead, use names like `userProfile`, `productList`, or `orderDetails`.
    * **Example:**
      * **Bad:** `temp`, `obj`, `val`
@@ -261,7 +261,7 @@ const handleStatusChange = (status: string, timestamp: number) => {
 
 ### Creating Reactive Variables
 
-When working with reactivity in Vue with TypeScript, it’s important to follow best practices to ensure clarity, maintainability, and performance.
+When working with reactivity in Vue with TypeScript, it's important to follow best practices to ensure clarity, maintainability, and performance.
 
 Below are general rules for creating reactive variables:
 
@@ -290,8 +290,8 @@ Below are general rules for creating reactive variables:
         const userData = ref<User>(); // Inferred type: User | undefined
         ```
 
-        Here, `userData` is a `ref` that can either hold a `User` object or be `undefined`. It’s a good practice to initialize `ref` with `undefined` if you expect the value to be potentially absent at first.
-*   **Don’t use generics for** `reactive` **or** `shallowReactive` **variables.**
+        Here, `userData` is a `ref` that can either hold a `User` object or be `undefined`. It's a good practice to initialize `ref` with `undefined` if you expect the value to be potentially absent at first.
+*   **Don't use generics for** `reactive` **or** `shallowReactive` **variables.**
 
     ```typescript
     interface Book {
@@ -317,7 +317,7 @@ Below are general rules for creating reactive variables:
     const DEFAULT_TIMOUT = 60000;  // Non-reactive, will not be changed
     ```
 
-    More example on section 6.3.4 Creating Non-Reactive Constant Variables.
+    More example on section 3.4 Creating Non-Reactive Constant Variables.
 
 ***
 
@@ -364,7 +364,7 @@ Below are general rules for creating reactive variables:
 
 **When to use `shallowRef` Variables?**
 
-*   **For primitive values** such as numbers, strings, booleans, or even for single items like `Date` or `RegExp` that don’t need deep reactivity.
+*   **For primitive values** such as numbers, strings, booleans, or even for single items like `Date` or `RegExp` that don't need deep reactivity.
 
     **Example:**
 
@@ -651,315 +651,11 @@ const message = `Hello, ${name}! Welcome to ${new Date().getFullYear()}.`;
 
 ***
 
-## 4. API Services
-
-We use Axios for all API communication. Organize your API calls into service files to keep them modular and maintainable.
-
-***
-
-### Basic Setup
-
-Import what you need:
-```typescript
-import { AxiosResponse } from 'axios';
-import createAxiosInstance from './createInstance';
-```
-
-***
-
-Create your API instance:
-```typescript
-const API = createAxiosInstance({ env: 'APP_EXAMPLE_API', prefix: '/api' });
-```
-
-This handles base URLs, environment settings, and interceptors automatically.
-
-***
-
-#### 4.3 Creating the Service Object
-
-Create a service object to group related API request methods. Ensure each method is separated by a single line for clarity. Each method should use arrow functions and return a `Promise<AxiosResponse>`.
-
-```typescript
-const ExampleService = {
-  // GET request to fetch a list of items
-  getList: (params?: GetListQueryParams): Promise<AxiosResponse<FetchListResponse<ListItem>>> => {
-    return API.get('/list', { params });
-  },
-
-  // GET request to fetch the details of an item
-  getDetail: (id: string): Promise<AxiosResponse<FetchDetailResponse<Item>>> => {
-    return API.get(`/detail/${id}`);
-  },
-
-  // POST request to create a new item
-  postCreateItem: (body: User): Promise<AxiosResponse<void>> => {
-    return API.post('/create', body);
-  },
-
-  // PUT request to edit an existing item
-  putEdit: (id: string, body: User): Promise<AxiosResponse<void>> => {
-    return API.put(`/edit/${id}`, body);
-  },
-
-  // DELETE request to delete an item
-  deleteItem: (id: string, body: User): Promise<AxiosResponse<void>> => {
-    return API.delete(`/delete/${id}`, { data: body });
-  },
-
-  // Advanced usage: GET request with custom headers and timeout
-  getCustomData: (): Promise<AxiosResponse<CustomData>> => {
-    return API.get('/custom-data', {
-      headers: { 'X-Custom-Header': 'CustomHeaderValue' },
-      timeout: 10000, // 10 seconds timeout
-    });
-  },
-
-  // Advanced usage: GET request with transformed response data
-  getTransformedData: (): Promise<AxiosResponse<CustomData>> => {
-    return API.get('/transformed-data', {
-      transformResponse: [
-        (data) => {
-          const parsedData = JSON.parse(data);
-          return parsedData.map((item: any) => ({
-            ...item,
-            isActive: item.status === 'active',
-          }));
-        },
-      ],
-    });
-  },
-};
-```
-
-The `FetchListResponse` and `FetchDetailResponse`:
-
-```typescript
-// src/types/fetchResponse.type.ts
-import { Data } from '@fewangsit/wangsvue/datatable';
-
-export interface FetchListResponse<T = Data> {
-  message: string;
-  data: {
-    data: T[];
-    totalRecords: number;
-  };
-}
-
-export interface FetchDetailResponse<T = Data> {
-  message: string;
-  data: T;
-}
-```
-
-***
-
-#### 4.4 Service Method Naming and Conventions
-
-* **Use PascalCase** for the service object name.
-* **Separate each object method with a single line spacing** for readability.
-* Use **arrow functions** and include the `return` statement.
-* Always define the type of **params**, **body**, and **return value** as `Promise<AxiosResponse<YourResponseBody>>`.
-* Use **camelCase** for the service method name.
-* Start each method name with an appropriate **HTTP method** such as `get`, `post`, `put`, `delete`, etc.
-* Add a descriptive name after the HTTP method to indicate what the API method does (e.g., `getUserDetail` for getting user details).
-*   Don't concatenate the params object to the URL; instead, pass the params to the axios request config.\
-    \
-    **Do:**
-
-    ```typescript
-    return API.get('/projects-list', { params });
-    ```
-
-    **Don’t:**
-
-    ```typescript
-    const paramsString = `status=${status}&sort=${sort}`;
-    const url = `/projects-list?${paramsString}`;
-    return API.get(url);
-    ```
-
-***
-
-#### 4.5 Exporting the Service
-
-Finally, export the service object as the default export of the module.
-
-```typescript
-export default ExampleService;
-```
-
-You’ll also need to export the service in the main.ts file of the repository.
-
-```typescript
-// main.ts
-export { default as ExampleService } from './src/services/example.service';
-```
-
-***
-
-#### 4.6 Type Definitions: DTO and Types Folders
-
-Ensure that type definitions for request and response bodies are separated and placed in appropriate folders for clarity and reusability.
-
-1. **Request DTOs**: Place all interfaces for entities that are sent to the API (such as request bodies and query parameters) in the `dto` folder.
-2. **Response Types**: Place all interfaces for the data returned by the API in the `types` folder.
-3. **File Naming Convention**: Use the same name for related files to maintain consistency.
-
-**Example File Structure:**
-
-```xml
-src/
-├── services/
-│   ├── example.service.ts        // Service file containing API methods
-├── dto/
-│   ├── exampleService.dto.ts    // Request DTOs (e.g., for request bodies and params)
-├── types/
-│   ├── exampleService.type.ts   // Response types (e.g., for API responses)
-```
-
-**Example DTO (Request) File:** `src/dto/exampleService.dto.ts`:
-
-```typescript
-export interface GetListQueryParams {
-  search?: string;
-  page?: number;
-  limit?: number;
-}
-
-export interface CreateItemBody {
-  name: string;
-  description: string;
-}
-
-export interface UpdateItemBody {
-  name: string;
-  description: string;
-}
-```
-
-**Example Type (Response) File:** `src/types/exampleService.type.ts`:
-
-```typescript
-export interface GetListResponseBody extends FetchResponse<User> {}
-
-export interface GetDetailResponseBody {
-  data: User;
-}
-```
-
-***
-
-### 5. Using the API Method from Services
-
-After creating the API service, as covered in the previous section, you can now implement the API methods in your `script setup`. Follow the rules below to ensure consistency and maintain best practices:
-
-***
-
-#### 5.1 Rules for Using API Methods
-
-1.  **Import the Service Object**\
-    Use the same name as the Service Object created in the service file. For example, if you created `ExampleService`, import it as follows:
-
-    ```typescript
-    import ExampleService from '@/services/example.service';
-    ```
-
-    **Note:** Do not include the `.ts` file extension in the import.
-2.  **Use Asynchronous Arrow Functions**\
-    Wrap the API call inside an asynchronous arrow function:
-
-    ```typescript
-    const getExampleDetail = async (): Promise<void> => {
-        // Your code implementation here
-    };
-    ```
-3.  **Use** `try-catch` for Error Handling\
-    Always use `try-catch` blocks instead of chaining `then` and `catch` for better readability and error handling:
-
-    ```typescript
-    const getExampleDetail = async (): Promise<void> => {
-        try {
-            const id: string = 'example-id';
-            const { data } = await ExampleService.getDetail(id);
-            console.log('Example detail:', data);
-        } catch (error) {
-            console.error('Error while fetching detail:', error);
-        }
-    };
-    ```
-
-    **Note**: Every caught error must be logged to the console using `console.error`.
-4.  **Destructure Data from the Axios Response**\
-    Extract only the data or properties you need from the Axios Response:
-
-    ```typescript
-    const { data } = await ExampleService.getDetail(id);
-    ```
-
-    **Other Axios Response Properties**:\
-    You can access additional response properties like `status`, `headers`, etc., if needed. Below is the Axios Response interface for reference:
-
-    ```typescript
-    export interface AxiosResponse<T = any, D = any> {
-        data: T;
-        status: number;
-        statusText: string;
-        headers: RawAxiosResponseHeaders | AxiosResponseHeaders;
-        config: InternalAxiosRequestConfig<D>;
-        request?: any;
-    }
-    ```
-5. **Always Use the** `await` Keyword\
-   Ensure all API calls use `await` to handle the promise.
-
-***
-
-#### 5.2 Complete Example: Using an API Method
-
-Below is an example implementation of the `getExampleDetail` method using the `ExampleService` and `shallowRef` for storing the data response:
-
-```xml
-<script setup lang="ts">
-import { shallowRef, ref } from 'vue';
-import ExampleService from '@/services/example.service';
-
-const exampleDetail = shallowRef<GetDetailResponseBody['data'] | null>(null);
-
-const getExampleDetail = async (): Promise<void> => {
-    try {
-        const id: string = 'example-id'; // Replace with actual ID
-        const { data } = await ExampleService.getDetail(id);
-        exampleDetail.value = data.data;
-    } catch (error) {
-        console.error('Error while fetching detail:', error);
-        toast.add({
-            message: 'Failed to fetch example detail. Please try again.',
-            error,
-        })
-    }
-};
-</script>
-```
-
-**Why Use** `shallowRef`**?**
-
-We use `shallowRef` for storing API response data like `exampleDetail` because it ensures reactivity at the top level without making all nested properties reactive. This approach is ideal in the following scenarios:
-
-1. **No Nested Property Updates**:\
-   In our example, we will never directly change the nested properties of `exampleDetail.value`. Instead, we always update the entire object (e.g., by fetching new data from the API).
-2. **Performance Optimization**:\
-   Making all nested properties reactive adds unnecessary overhead, especially for complex objects with deep nesting. By using `shallowRef`, we minimize this overhead and improve performance.
-3. **Clarity of Intent**:\
-   `shallowRef` makes it clear that we only care about the top-level reactivity of the `exampleDetail` object, aligning with our intended usage.
-
-***
-
-## 6. Vue Router Setup
+## 4. Vue Router Setup
 
 Keep your routing simple and organized with a single `router/index.ts` file.
 
-#### 6.1 Rules for Writing Router Configuration
+#### 4.1 Rules for Writing Router Configuration
 
 **1. Import Necessary Types and Methods**
 
@@ -1024,7 +720,7 @@ In this example:
 
 ***
 
-#### 6.2 Example Router Configuration
+#### 4.2 Example Router Configuration
 
 Here is an example implementation of the `index.ts` file in the `router` folder:
 
@@ -1059,19 +755,19 @@ export default router;
 
 ***
 
-## 7. Provide / Inject Pattern
+## 5. Provide / Inject Pattern
 
 Use injection keys for type-safe dependency injection across your component tree.
 
 ***
 
-#### 7.1 What is an Injection Key?
+#### 5.1 What is an Injection Key?
 
 An Injection Key is a strongly typed symbol or unique identifier used for `provide` and `inject`. It ensures that the injected values are type-safe and prevents accidental naming conflicts.
 
 ***
 
-#### 7.2 Rules for Using Provide / Inject with Injection Keys
+#### 5.2 Rules for Using Provide / Inject with Injection Keys
 
 **1. Use Symbols as Injection Keys**
 
@@ -1128,7 +824,7 @@ provide(ExampleKey, exampleValue);
 
 **5. Ensure Safe Injection Handling**
 
-When using `inject`, it’s essential to handle the possibility of a null or undefined value. This can be achieved either by providing a fallback/default value or by safely accessing properties using optional chaining.
+When using `inject`, it's essential to handle the possibility of a null or undefined value. This can be achieved either by providing a fallback/default value or by safely accessing properties using optional chaining.
 
 **Using a Default Value**
 
@@ -1150,7 +846,7 @@ console.log(injectedValue.exampleProperty); // Output: "Default value" (if no pr
 
 **Using Optional Chaining**
 
-If you don’t want to define a fallback value, use optional chaining to safely access properties and handle the absence of a provider.
+If you don't want to define a fallback value, use optional chaining to safely access properties and handle the absence of a provider.
 
 ```typescript
 import { inject } from 'vue';
@@ -1185,7 +881,7 @@ export const ExampleKey: InjectionKey<ExampleType> = Symbol();
 
 ***
 
-#### 7.3 Example Usage
+#### 5.3 Example Usage
 
 **Centralized Injection Key File**
 
@@ -1241,7 +937,7 @@ console.log(exampleValue?.value.exampleProperty); // We need to access .value be
 
 ***
 
-#### 7.4 Benefits of Using Injection Keys
+#### 5.4 Benefits of Using Injection Keys
 
 1. **Type Safety**: Strong typing reduces bugs and improves developer productivity.
 2. **Uniqueness**: Symbols prevent key name collisions.
@@ -1250,7 +946,7 @@ console.log(exampleValue?.value.exampleProperty); // We need to access .value be
 
 By following these standards, your use of `provide` and `inject` will be robust, maintainable, and aligned with Vue's best practices.
 
-## 8. Environment Variables
+## 6. Environment Variables
 
 Keep your configuration secure and organized with proper environment variable naming.
 
