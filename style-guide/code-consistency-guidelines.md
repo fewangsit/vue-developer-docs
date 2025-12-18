@@ -5,72 +5,65 @@ icon: brackets-curly
 
 # Code Consistency Guidelines
 
-Follow these rules to keep our code looking the same across all projects and for everyone writing code. Make sure to stick to these guidelines for a consistent and easy-to-understand coding style.
+These guidelines help maintain consistent, readable code across all projects. Following these standards makes collaboration easier and keeps our codebase maintainable for everyone on the team.
 
-### 1. Naming Convention
+## 1. Naming Conventions
 
-#### 1.1 File Naming
+### File Naming
 
-* `PascalCase` for SFC file and Module Folder.
-* `camelCase` for all TypeScript `.ts` files, including type, dto, util, etc.
-*   Do not use abbreviations in names; use the full word.
+**Vue Components & Module Folders:** Use `PascalCase`
+**TypeScript Files:** Use `camelCase` for `.ts` files (types, DTOs, utils, etc.)
 
-    ```plaintext
-    <!-- Do -->
-    MultiNameContainer.vue
-
-    <!-- Don't -->
-    MultiNC.vue
-    ```
-*   Exceptions are made when an abbreviation is commonly known, such as RFID, KPI, PBI, etc. In those cases, when using PascalCase and camelCase, you should treat abbreviations the same as words.
-
-    ```plaintext
-    <!-- Do -->
-    PbiDialogForm.vue
-
-    <!-- Don't -->
-    PBIDialogForm.vue
-
-    <!-- Do -->
-    tagRfid.dto.ts
-
-    <!-- Don't -->
-    tagRFID.dto.ts
-    ```
-
-#### 1.2 Folder Structure & Component File Naming Convention
-
-When creating folder structures for components within a module, follow a hierarchical approach where the most common scope appears first, followed by more specific sub-scopes. This ensures clarity, consistency, and scalability in larger applications.
-
-**General Naming Pattern:**
-
+**Use full words, not abbreviations:**
 ```plaintext
-CommonSpecificMoreSpecificTheMostSpecific.vue
+✅ Good
+MultiNameContainer.vue
+
+❌ Avoid
+MultiNC.vue
 ```
 
-* **Common**: The general module or feature group (e.g., "Borrow").
-* **Specific**: A more refined section or feature within the module (e.g., "History").
-* **More Specific**: Any further subdivisions or sections, such as individual actions or components (e.g., "Page", "Table").
-* **The Most Specific**: Highly specific components or subcomponents (e.g., "Filter", "Buttons").
-
-**Folder Structure Example:**
-
-Given the example of the "Borrow" module with its submodules, the folder structure would be:
-
+**Exception:** Well-known abbreviations (RFID, KPI, PBI) should be treated as single words:
 ```plaintext
-> Borrow
-  > BorrowHistory
-    BorrowHistoryPage.vue        // The main page or view component for the Borrow History section
-    BorrowHistoryFilter.vue      // Filter component for searching or narrowing down history
-    BorrowHistoryButtons.vue     // Buttons related to Borrow History actions (e.g., add, edit)
-    BorrowHistoryTable.vue       // Table component displaying borrowed history data
-  > BorrowTransaction
-    BorrowTransactionPage.vue    // Main page for Borrow Transaction details
-    BorrowTransactionForm.vue    // Form for initiating or editing a borrow transaction
-    BorrowTransactionDetails.vue // Detailed view of a specific borrow transaction
-  > Borrowed
-    BorrowedList.vue             // List view for borrowed items
-    BorrowedItemDetail.vue       // Detailed view of a borrowed item
+✅ Good
+PbiDialogForm.vue
+tagRfid.dto.ts
+
+❌ Avoid
+PBIDialogForm.vue
+tagRFID.dto.ts
+```
+
+### Component Organization
+
+Organize components hierarchically from general to specific. This makes finding and understanding components much easier as your app grows.
+
+**Naming Pattern:**
+```plaintext
+[Module][Feature][Component][Subcomponent].vue
+```
+
+**Structure breakdown:**
+- **Module**: Main feature area (e.g., "Borrow")
+- **Feature**: Specific section (e.g., "History") 
+- **Component**: UI element type (e.g., "Page", "Table")
+- **Subcomponent**: Specific functionality (e.g., "Filter", "Buttons")
+
+**Example Structure:**
+```plaintext
+📁 Borrow/
+  📁 BorrowHistory/
+    📄 BorrowHistoryPage.vue        # Main page component
+    📄 BorrowHistoryFilter.vue      # Search and filter controls
+    📄 BorrowHistoryButtons.vue     # Action buttons (add, edit, etc.)
+    📄 BorrowHistoryTable.vue       # Data table display
+  📁 BorrowTransaction/
+    📄 BorrowTransactionPage.vue    # Transaction overview page
+    📄 BorrowTransactionForm.vue    # Create/edit transaction form
+    📄 BorrowTransactionDetails.vue # Transaction detail view
+  📁 Borrowed/
+    📄 BorrowedList.vue             # List of borrowed items
+    📄 BorrowedItemDetail.vue       # Individual item details
 ```
 
 #### 1.3 Variable Naming Conventions
@@ -125,52 +118,39 @@ By following these naming conventions, you will make your code more intuitive, e
 
 ***
 
-### 2. Component Template Guidelines
+## 2. Vue Template Guidelines
 
-To maintain clarity and readability in Vue templates, adhere to these conventions:
+Keep templates clean and readable by following these simple rules.
 
-#### 2.1 HTML Tags and Attributes
+### HTML vs Component Tags
 
-Use **lowercase** for all native HTML tags and attributes to differentiate them from custom components.
-
-**Example:**
-
+**Native HTML elements:** Use lowercase
 ```html
 <div class="container">
   <button type="button">Click Me</button>
 </div>
 ```
 
-***
-
-#### 2.2 Component Tags
-
-Use **PascalCase** for custom component tags.
-
-Use **kebab-case** for Vue built-in components and Vue Router components.
-
-**Do:**
-
+**Custom components:** Use PascalCase
+**Vue built-ins:** Use kebab-case
 ```html
+<!-- Custom components -->
 <MyComponent />
 <UserProfile />
+
+<!-- Vue built-in components -->
 <router-link to="/home">Home</router-link>
 <keep-alive>
   <router-view />
 </keep-alive>
 ```
 
-***
+### Keep Templates Simple
 
-#### 2.3 Avoid Complex Expressions in Templates
+Move complex logic to computed properties or methods instead of cluttering your template.
 
-Avoid writing complex expressions directly in the template as it makes the code harder to read and debug.
-
-Move such computations to **computed properties** or **functions** in the `<script>` block.
-
-**Don't:**
-
-```xml
+```html
+<!-- ❌ Hard to read and debug -->
 <div>
   {{
     fullName
@@ -179,174 +159,107 @@ Move such computations to **computed properties** or **functions** in the `<scri
       .join(' ')
   }}
 </div>
+
+<!-- ✅ Clean and maintainable -->
+<div>{{ formatFullName(fullName) }}</div>
 ```
 
-**Do:**
-
-*   Define logic in a **function** or **computed property** in the `<script>` block:
-
-    ```xml
-    <script setup lang="ts">
-    const formatFullName = (name: string): string => {
-      return name
-        .split(' ')
-        .map((word) => word[0].toUpperCase() + word.slice(1))
-        .join(' ');
-    };
-    </script>
-    ```
-*   Use the function in the template for simplicity:
-
-    ```xml
-    <div>{{ formatFullName(fullName) }}</div>
-    ```
+```typescript
+// Move the logic to your script section
+<script setup lang="ts">
+const formatFullName = (name: string): string => {
+  return name
+    .split(' ')
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(' ');
+};
+</script>
+```
 
 ***
 
-**Summary**
+## 3. Script Setup & TypeScript
 
-1. Use **lowercase** for HTML tags and attributes.
-2. Use **PascalCase** for custom components and **kebab-case** for Vue built-in and router components.
-3. Use **self-closing tags** when no children are present.
-4. Avoid complex expressions in templates — use computed properties or functions.
+### Defining Props
 
-***
+Always use type-based declarations for better TypeScript support and code clarity. Use `withDefaults` when you need default values.
 
-### 3. The Script Setup & TypeScript Code
-
-#### 3.1 Defining Props
-
-In the Composition API, props can be defined using either type-based declaration or runtime declaration.
-
-**It is mandatory to use type-based declarations** for better TypeScript support and maintainability.
-
-When default values are needed, use the `withDefaults` method.
-
-***
-
-**Examples:**
-
-**Type-Based Declaration (Mandatory):**
-
+**Basic props:**
 ```typescript
 const props = defineProps<{
-  propsName: string;
+  userName: string;
+  isActive: boolean;
 }>();
 ```
 
-**Type-Based Declaration with Default Values:**
-
+**Props with defaults:**
 ```typescript
 const props = withDefaults(
   defineProps<{
-    propsName?: string; // Optional with a default value
+    userName?: string;
+    maxItems?: number;
   }>(),
   {
-    propsName: 'Default Name',
-  },
+    userName: 'Guest',
+    maxItems: 10,
+  }
 );
 ```
 
-***
-
-**Naming Conventions for Props**
-
-Props names should use **camelCase in the script setup** but must be written in kebab-case when used in the parent component's template.
-
-**Example:**
-
-**Child Component Props Definition:**
-
+**Naming:** Use camelCase in script, kebab-case in templates
 ```typescript
+// In component
 defineProps<{
-  propsName: string;
+  userName: string;
 }>();
 ```
 
-**Parent Component Usage:**
-
-```xml
-<ChildComponent props-name="Anonim" />
+```html
+<!-- In parent template -->
+<MyComponent user-name="John" />
 ```
 
-***
-
-**Additional Notes**
-
-* If the props are not referenced in the `<script setup>` block, avoid unnecessary assignments by omitting `const props`.
-
-**Example:**
-
-```typescript
-// Correct: Avoid unnecessary assignment if props aren't used
-defineProps<{
-  propsName: string;
-}>();
-```
+**Tip:** Skip `const props =` if you don't reference props in your script.
 
 By following these guidelines, you ensure consistency, clarity, and efficiency in defining and using props in Vue components.
 
 ***
 
-#### 3.2 Defining Emits
+### Defining Emits
 
-Similar to `defineProps`, you can define emits in the `<script setup>` block using either type-based or runtime declaration. However, **type-based declarations are preferred** for defining emits due to their conciseness.
-
-**Naming Conventions for Emits**
-
-Emit names should follow the same naming conventions as props:
-
-* Use camelCase for emit names in the script setup.
-* Use kebab-case for emit names in the template.
-
-***
-
-**Examples:**
-
-**Type-Based Declaration:**
+Use type-based declarations for emits to get better TypeScript support.
 
 ```typescript
-// 3.3+: alternative, more succinct syntax
 const emit = defineEmits<{
-  emitName: [payload: string, secondPayload: number]; // Defines the emit with two parameters
+  userSelected: [user: User];
+  statusChanged: [status: string, timestamp: number];
 }>();
 ```
 
-Reference: [Typing Component Emits](https://vuejs.org/guide/typescript/composition-api.html#typing-component-emits)
-
-**Template Usage:**
-
-```xml
-<ChildComponent @emit-name="doSomething" />
+**Usage in parent:**
+```html
+<UserList 
+  @user-selected="handleUserSelection"
+  @status-changed="handleStatusChange" 
+/>
 ```
 
 ```typescript
-// Handling the emit with function parameters
-const doSomething = (payload: string, secondPayload: number) => {
-  console.log(payload, secondPayload); // You can now use the parameters here
+const handleUserSelection = (user: User) => {
+  console.log('Selected user:', user);
+};
+
+const handleStatusChange = (status: string, timestamp: number) => {
+  console.log(`Status: ${status} at ${timestamp}`);
 };
 ```
 
-***
+**Tip:** Skip `const emit =` if you don't call emit functions in your script.
 
-**Additional Notes**
-
-* If you don't reference the `emit` function within the `<script setup>` block, avoid unnecessary variable assignments by omitting `const emit`.
-
-**Example:**
-
-```typescript
-// Correct: Avoid unnecessary assignment if emit isn't used
-defineEmits<{
-  emitName: [payload: string];
-}>();
-```
-
-By following these guidelines, you ensure clear and concise emit definitions and usage, improving the maintainability of your Vue components.
 
 ***
 
-#### 3.3 Creating Reactive Variables
+### Creating Reactive Variables
 
 When working with reactivity in Vue with TypeScript, it’s important to follow best practices to ensure clarity, maintainability, and performance.
 
@@ -660,9 +573,9 @@ let count = 0;  // Avoid using `let` in the global scope of the script
 
 ***
 
-#### 3.9 Don't Ignore ESLint and SonarLint Warnings
+#### 3.9 Don't Ignore ESLint Warnings
 
-Always address warnings and errors from **ESLint** and **SonarLint**. These tools help maintain code quality by enforcing consistent style and catching potential issues.
+Always address warnings and errors from **ESLint**. This tools help maintain code quality by enforcing consistent style and catching potential issues.
 
 By addressing the warnings and fixing them, you ensure cleaner, more maintainable code.
 
@@ -738,42 +651,28 @@ const message = `Hello, ${name}! Welcome to ${new Date().getFullYear()}.`;
 
 ***
 
-### 4. Creating API Services
+## 4. API Services
 
-Our front-end application communicates with backend services through REST APIs. We use Axios to simplify and make all API requests more efficient.
-
-For each project, we have an API Services repository that centralizes the creation of service files. This approach makes it modular and easy to manage for future updates.
-
-Follow our guidelines for creating service files:
+We use Axios for all API communication. Organize your API calls into service files to keep them modular and maintainable.
 
 ***
 
-#### 4.1 Importing Necessary Modules
+### Basic Setup
 
-Import only the necessary modules to keep the service files clean.
-
+Import what you need:
 ```typescript
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import createAxiosInstance from './createInstance';
 ```
 
 ***
 
-#### 4.2 Creating the Axios Instance
-
-Create the Axios instance using the `createAxiosInstance` function, which is designed to configure and initialize the Axios client for your application.
-
-It centralizes the API configuration, including base URLs, environment-specific settings, and request/response interceptors.
-
-**Explanation:** `createAxiosInstance` is a utility function that initializes an Axios instance with predefined configurations such as:
-
-* **Base URL and Prefix**: Ensures all requests are routed correctly.
-* **Environment Variables**: Dynamically sets the API endpoint based on the environment (`development`, `production`, etc.).
-* **Interceptors**: Handles global behaviors for requests or responses, such as logging, authentication, or error handling.
-
+Create your API instance:
 ```typescript
 const API = createAxiosInstance({ env: 'APP_EXAMPLE_API', prefix: '/api' });
 ```
+
+This handles base URLs, environment settings, and interceptors automatically.
 
 ***
 
@@ -837,7 +736,7 @@ The `FetchListResponse` and `FetchDetailResponse`:
 
 ```typescript
 // src/types/fetchResponse.type.ts
-import { Data } from 'wangsvue/components/datatable/DataTable.vue.d';
+import { Data } from '@fewangsit/wangsvue/datatable';
 
 export interface FetchListResponse<T = Data> {
   message: string;
@@ -1056,9 +955,9 @@ We use `shallowRef` for storing API response data like `exampleDetail` because i
 
 ***
 
-### 6. Creating Vue Router Configuration File
+## 6. Vue Router Setup
 
-The `router` folder should contain only one `index.ts` configuration file. Here are the rules you need to follow when writing the router configuration.
+Keep your routing simple and organized with a single `router/index.ts` file.
 
 #### 6.1 Rules for Writing Router Configuration
 
@@ -1160,11 +1059,9 @@ export default router;
 
 ***
 
-### 7. Working with Provide / Inject
+## 7. Provide / Inject Pattern
 
-To ensure consistency and maintainability when using Vue's `provide` and `inject` features, it is essential to establish clear standards. These standards will help developers avoid common pitfalls such as naming collisions or untyped injections.
-
-Below is a standardized approach to using `provide` and `inject`, with a focus on using **Injection Keys**.
+Use injection keys for type-safe dependency injection across your component tree.
 
 ***
 
@@ -1353,19 +1250,36 @@ console.log(exampleValue?.value.exampleProperty); // We need to access .value be
 
 By following these standards, your use of `provide` and `inject` will be robust, maintainable, and aligned with Vue's best practices.
 
-### 8. Environment Variables (.env)
+## 8. Environment Variables
 
-#### 8.1 Prefix
+Keep your configuration secure and organized with proper environment variable naming.
 
-* All environment variables should begin with either `VUE_APP_` for Production Build or `VITE_APP_` for development.
+### Naming Rules
 
-#### 8.2 Naming
+**Use proper prefixes:**
+- `VUE_APP_` for production builds
+- `VITE_APP_` for development
 
-* Variable names should be closely match their values.
-* **Example:**
-  * **Avoid:** `VUE_APP_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com`
-  * **Prefer:** `VUE_APP_SETTINGS_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com`
+**Make names descriptive:**
+```bash
+# ❌ Vague and confusing
+VUE_APP_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com
 
-#### 8.3 Consistency
+# ✅ Clear and descriptive
+VUE_APP_SETTINGS_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com
+```
 
-If a variable exists with one prefix, its counterpart with the other prefix should also be defined.
+**Stay consistent:** If you define a variable with one prefix, define it with both prefixes for consistency across environments.
+
+---
+
+## Wrapping Up
+
+These guidelines help create code that's easy to read, maintain, and collaborate on. Remember:
+
+- **Consistency is key** - follow the same patterns throughout your project
+- **Clarity over cleverness** - write code that others can easily understand  
+- **When in doubt, be explicit** - clear types and descriptive names prevent bugs
+- **Use the tools** - let ESLint and TypeScript help you catch issues early
+
+Happy coding! 🚀
