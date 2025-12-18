@@ -27,6 +27,8 @@
 * [Project Structure](style-guide/project-structure.md)
 * [Vue Code Structure](style-guide/vue-code-structure.md)
 * [Code Consistency Guidelines](style-guide/code-consistency-guidelines.md)
+* [API Services](style-guide/api-services/README.md)
+  * [Creating Axios Instance](style-guide/api-services/creating-axios-instance.md)
 * [Documenting Code](style-guide/documenting-code.md)
 * [Git Conventional Commits](style-guide/git-conventional-commits.md)
 * [VS Code](style-guide/vs-code.md)
