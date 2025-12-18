@@ -31,6 +31,7 @@
   * [Creating API Services](style-guide/api-services/creating-api-services.md)
   * [Type Definitions](style-guide/api-services/type-definitions.md)
   * [Using API Services](style-guide/api-services/using-api-services.md)
+  * [API Service Summary](style-guide/api-services/api-service-summary.md)
 * [Documenting Code](style-guide/documenting-code.md)
 * [Git Conventional Commits](style-guide/git-conventional-commits.md)
 * [VS Code](style-guide/vs-code.md)
