@@ -1,4 +1,5 @@
 ---
+noIndex: true
 icon: cube
 ---
 
@@ -8,7 +9,7 @@ icon: cube
 
 MicroTSM is a comprehensive Micro Front End Framework that also provides powerful build tooling capabilities. We leverage this tool to efficiently handle production code builds and execute testing workflows with optimized performance and reliability.
 
-***
+---
 
 ### 2. PNPM
 

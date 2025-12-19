@@ -30,7 +30,7 @@ When making commits, follow these guidelines for clear communication about the n
 ### 3. Example
 
 ```bash
-fix(A5xw3u3K): bulk action not properly works
+fix(datatable): bulk action not properly works
 
 - Bulk action should applying the selected action on Apply button clicked.
 - The label should be back into 'Bulk Action' on Apply button clicked.

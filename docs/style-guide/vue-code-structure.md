@@ -14,7 +14,52 @@ When creating an SFC (.vue) file, you **must** use the `PascalCase` naming conve
 
 The code should be organized in the following way:
 
-```xml
+#### 1.1 The SFC Tags Arrangement
+
+You should place the script tag at the top of the SFC, the template in the middle, and the style at the bottom.
+
+So, your SFC file should look like this:
+
+```vue
+<script setup lang="ts">
+/**
+ * The Component Logic
+ */
+</script>
+
+<template>
+    <!-- the Component Template -->
+</template>
+
+<style scoped>
+    /* The Component Style */
+</style>
+```
+
+***
+
+#### 1.2 The Script Code Arrangement
+
+Group your code by type. Follow this structure:
+
+* Import order:
+  * **Start with named imports**, followed by default imports.
+  * **Separate named imports and default imports with an empty line**.
+  *   When the import statement spans multiple lines, **add a line break after the statement.**
+* Define Props, Emits, Models, Options, Slots if any.
+* Group Vue.js lifecycle hooks.
+
+> The order matters: `onBeforeMount`, `onMounted`, `onBeforeUpdate`, `onUpdated`, `onBeforeUnmount`, `onUnmounted`, `onRenderTracked`, `onRenderTriggered`, `onErrorCaptured`.
+
+* Group Vue Router hooks.
+* Define the store, router, toast, and any other Vue plugin setup.
+* Group `interface`, `type`, `constants`, `shallowRef`, `ref`, `reactive`, `computed`, `inject`, and methods together. Separate each group with an empty line.
+* Define watchers.
+* `defineExpose` at the most bottom.
+
+#### 1.3 Example
+
+```vue
 <script setup lang="ts">
 import {
   Ref,
@@ -93,8 +138,7 @@ const COLUMNS: TableColumn[] = [
 /**
  * Defining inject, ref, reactive, computed, provide, and method. Separated by an empty line.
  */
-const injected = inject('dataToInject') as Ref<string[]>;
-const alsoInjected = inject('dataToInject') as Ref<string[]>;
+const injectedValue = inject(ExampleKey, defaultExampleValue);
   
 const componentName = shallowRef<string>('Component Name');
 const componentState = shallowRef<boolean>(false);
@@ -112,16 +156,10 @@ const componentMethod = (): void => {
   componentName.value = 'Example Component Edited';
 };
 
-/**
- * Waching data changes
- */
 watch(formatedComponentName, (newName: string) => {
   console.log(`New name: ${newName}`);
 });
 
-/**
- * `defineExpose` at the most bottom
- */
 defineExpose({
   componentVariable,
   formatedComponentName,
@@ -133,76 +171,3 @@ defineExpose({
   <Button @click="componentMethod">Click</Button>
 </template>
 ```
-
-***
-
-Let's break it down into smaller parts.
-
-#### 1.1 The SFC Tags Arrangement
-
-You should place the script tag at the top of the SFC, the template in the middle, and the style at the bottom.
-
-So, your SFC file should look like this:
-
-```xml
-<script setup lang="ts">
-/**
- * The Component Logic
- */
-</script>
-
-<template>
-    <!-- the Component Template -->
-</template>
-```
-
-***
-
-#### 1.2 The Script Code Arrangement
-
-First, ensure you type `<script setup lang="ts">` instead of `<script lang="ts" setup>`. Both are correct, but for consistency, use the first one.
-
-The second: Group your code by type. Follow this structure:
-
-* Import order:
-  * **Start with named imports**, followed by default imports.
-  * **Separate named imports and default imports with an empty line**.
-  *   When the import statement spans multiple lines, **add a line break after the statement.**
-
-      ```typescript
-      import {
-        Ref,
-        computed,
-        inject,
-        onMounted,
-        onUnmounted,
-        ref,
-        watch
-      } from 'vue';
-      // Add a line break after an import statement that spans multiple lines
-
-      import { onBeforeRouteLeave, useRoute } from 'vue-router';
-      import type { AxiosResponse } from 'axios';
-      import type { ApprovalDto } from '@/dto/approval.dto';
-      import type { Menus } from '@/types/breadcrumb.type';
-      import type { User } from '@/types/user.type';
-
-      import Button from 'primevue/button';
-      import Breadcrumb from '@/components/common/Breadcrumb.vue';
-      import HistoryButtons from '@/components/modules/History/HistoryButtons.vue';
-      import AssetsService from '@/services/assets.service';
-      import SettingsService from '@/services/settings.service';
-      import useToast from '@/utils/toast.util';
-      ```
-* Define Props, Emits, Models, Options, Slots if any.
-* Group Vue.js lifecycle hooks.
-
-> The order matters: `onBeforeMount`, `onMounted`, `onBeforeUpdate`, `onUpdated`, `onBeforeUnmount`, `onUnmounted`, `onRenderTracked`, `onRenderTriggered`, `onErrorCaptured`.
-
-* Group Vue Router hooks.
-* Define the store, router, toast, and any other Vue plugin setup.
-* Group constants, `interface`, `type`, `shallowRef`, `ref`, `reactive`, `computed`, `inject`, and methods together. Separate each group with an empty line.
-* Define watchers.
-* `defineExpose` at the most bottom.
-
-**Important:** Not every SFC script needs all the items in the list above. Include them if needed, remove them if not necessary!

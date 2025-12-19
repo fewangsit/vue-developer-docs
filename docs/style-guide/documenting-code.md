@@ -66,15 +66,7 @@ Code comments should serve as **guides for clarity and maintenance**, avoiding r
         // Code implementation
     }
     ```
-7.  **Add Comments When Fixing Bugs**: When fixing bugs, comment the solution or workaround.
-
-    **Example**:
-
-    ```typescript
-    // Fixed issue #1425: Mouse events in Firefox 2 would not fire if dragged outside window
-    function onMouseMove(event: MouseEvent) { ... }
-    ```
-8.  **Add Comments On Unfinished Code**: When you’re committing unfinished code/code used for debugging, tag them with a TODO comment, so that you won’t forget to complete them.
+7.  **Add Comments On Unfinished Code**: When you’re committing unfinished code/code used for debugging, tag them with a TODO comment, so that you won’t forget to complete them.
 
     **Example**:
 
@@ -90,19 +82,6 @@ Code comments should serve as **guides for clarity and maintenance**, avoiding r
 
 ### 2. Examples
 
-#### 2.1 Bad Commenting (Redundant)
-
-```typescript
-// Returns the sum of two numbers
-const add = (a: number, b: number): number => {
-  return a + b; // Adds a and b
-};
-```
-
-The function name and implementation are self-explanatory, making these comments unnecessary.
-
-#### 2.2 Better Commenting
-
 ```typescript
 /**
  * Function to update the label text and emit events.
@@ -114,7 +93,6 @@ const updateLabel = (inputElement: HTMLElement, badgeEl: HTMLElement): void => {
 
   // If the new text content is different from the current label text.
   if (text !== props.label) {
-    // Trim the text to removes extra spaces.
     const trimmed = text?.trim() ?? null;
 
     inputElement.textContent = trimmed;
