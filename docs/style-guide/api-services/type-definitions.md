@@ -1,9 +1,8 @@
 ---
-noIndex: true
 icon: code
 ---
 
-# Type Definitions: DTO and Types Folders
+# Type Definitions
 
 Ensure that type definitions for request and response bodies are separated and placed in appropriate folders for clarity and reusability.
 
@@ -61,7 +60,7 @@ export interface GetDetailResponseBody {
 
 ## Benefits
 
-- **Separation of Concerns**: Clear distinction between request and response data structures
-- **Reusability**: Types can be easily imported and reused across different parts of the application
-- **Maintainability**: Changes to API contracts are localized to specific files
-- **Type Safety**: Strong typing ensures compile-time validation of API interactions
+* **Separation of Concerns**: Clear distinction between request and response data structures
+* **Reusability**: Types can be easily imported and reused across different parts of the application
+* **Maintainability**: Changes to API contracts are localized to specific files
+* **Type Safety**: Strong typing ensures compile-time validation of API interactions

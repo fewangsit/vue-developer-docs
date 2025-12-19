@@ -1,5 +1,4 @@
 ---
-noIndex: true
 icon: play
 ---
 
@@ -55,8 +54,7 @@ Extract only the data or properties you need from the Axios Response:
 const { data } = await ExampleService.getDetail(id);
 ```
 
-**Other Axios Response Properties:**
-You can access additional response properties like `status`, `headers`, etc., if needed. Below is the Axios Response interface for reference:
+**Other Axios Response Properties:** You can access additional response properties like `status`, `headers`, etc., if needed. Below is the Axios Response interface for reference:
 
 ```typescript
 export interface AxiosResponse<T = any, D = any> {
@@ -105,7 +103,5 @@ const getExampleDetail = async (): Promise<void> => {
 We use `shallowRef` for storing API response data like `exampleDetail` because it ensures reactivity at the top level without making all nested properties reactive. This approach is ideal in the following scenarios:
 
 1. **No Nested Property Updates**: In our example, we will never directly change the nested properties of `exampleDetail.value`. Instead, we always update the entire object (e.g., by fetching new data from the API).
-
 2. **Performance Optimization**: Making all nested properties reactive adds unnecessary overhead, especially for complex objects with deep nesting. By using `shallowRef`, we minimize this overhead and improve performance.
-
 3. **Clarity of Intent**: `shallowRef` makes it clear that we only care about the top-level reactivity of the `exampleDetail` object, aligning with our intended usage.

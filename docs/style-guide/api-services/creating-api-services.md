@@ -1,5 +1,4 @@
 ---
-noIndex: true
 icon: server
 ---
 
@@ -10,12 +9,14 @@ We use Axios for all API communication. Organize your API calls into service fil
 ## Basic Setup
 
 Import what you need:
+
 ```typescript
 import { AxiosResponse } from 'axios';
 import createAxiosInstance from './createInstance';
 ```
 
 Create your API instance:
+
 ```typescript
 const API = createAxiosInstance({ env: 'APP_EXAMPLE_API', prefix: '/api' });
 ```
@@ -110,11 +111,13 @@ export interface FetchDetailResponse<T = Data> {
 * Don't concatenate the params object to the URL; instead, pass the params to the axios request config.
 
 **Do:**
+
 ```typescript
 return API.get('/projects-list', { params });
 ```
 
 **Don't:**
+
 ```typescript
 const paramsString = `status=${status}&sort=${sort}`;
 const url = `/projects-list?${paramsString}`;

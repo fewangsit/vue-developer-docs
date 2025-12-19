@@ -1,5 +1,4 @@
 ---
-noIndex: true
 icon: brackets-curly
 ---
 
@@ -11,10 +10,10 @@ These guidelines help maintain consistent, readable code across all projects. Fo
 
 ### File Naming
 
-**Vue Components & Module Folders:** Use `PascalCase`
-**TypeScript Files:** Use `camelCase` for `.ts` files (types, DTOs, utils, etc.)
+**Vue Components & Module Folders:** Use `PascalCase` **TypeScript Files:** Use `camelCase` for `.ts` files (types, DTOs, utils, etc.)
 
 **Use full words, not abbreviations:**
+
 ```plaintext
 ✅ Good
 MultiNameContainer.vue
@@ -24,6 +23,7 @@ MultiNC.vue
 ```
 
 **Exception:** Well-known abbreviations (RFID, KPI, PBI) should be treated as single words:
+
 ```plaintext
 ✅ Good
 PbiDialogForm.vue
@@ -39,17 +39,20 @@ tagRFID.dto.ts
 Organize components hierarchically from general to specific. This makes finding and understanding components much easier as your app grows.
 
 **Naming Pattern:**
+
 ```plaintext
 [Module][Feature][Component][Subcomponent].vue
 ```
 
 **Structure breakdown:**
-- **Module**: Main feature area (e.g., "Borrow")
-- **Feature**: Specific section (e.g., "History") 
-- **Component**: UI element type (e.g., "Page", "Table")
-- **Subcomponent**: Specific functionality (e.g., "Filter", "Buttons")
+
+* **Module**: Main feature area (e.g., "Borrow")
+* **Feature**: Specific section (e.g., "History")
+* **Component**: UI element type (e.g., "Page", "Table")
+* **Subcomponent**: Specific functionality (e.g., "Filter", "Buttons")
 
 **Example Structure:**
+
 ```plaintext
 📁 Borrow/
   📁 BorrowHistory/
@@ -125,14 +128,15 @@ Keep templates clean and readable by following these simple rules.
 ### HTML vs Component Tags
 
 **Native HTML elements:** Use lowercase
+
 ```html
 <div class="container">
   <button type="button">Click Me</button>
 </div>
 ```
 
-**Custom components:** Use PascalCase
-**Vue built-ins:** Use kebab-case
+**Custom components:** Use PascalCase **Vue built-ins:** Use kebab-case
+
 ```html
 <!-- Custom components -->
 <MyComponent />
@@ -185,6 +189,7 @@ const formatFullName = (name: string): string => {
 Always use type-based declarations for better TypeScript support and code clarity. Use `withDefaults` when you need default values.
 
 **Basic props:**
+
 ```typescript
 const props = defineProps<{
   userName: string;
@@ -193,6 +198,7 @@ const props = defineProps<{
 ```
 
 **Props with defaults:**
+
 ```typescript
 const props = withDefaults(
   defineProps<{
@@ -207,6 +213,7 @@ const props = withDefaults(
 ```
 
 **Naming:** Use camelCase in script, kebab-case in templates
+
 ```typescript
 // In component
 defineProps<{
@@ -237,6 +244,7 @@ const emit = defineEmits<{
 ```
 
 **Usage in parent:**
+
 ```html
 <UserList 
   @user-selected="handleUserSelection"
@@ -255,7 +263,6 @@ const handleStatusChange = (status: string, timestamp: number) => {
 ```
 
 **Tip:** Skip `const emit =` if you don't call emit functions in your script.
-
 
 ***
 
@@ -953,10 +960,12 @@ Keep your configuration secure and organized with proper environment variable na
 ### Naming Rules
 
 **Use proper prefixes:**
-- `VUE_APP_` for production builds
-- `VITE_APP_` for development
+
+* `VUE_APP_` for production builds
+* `VITE_APP_` for development
 
 **Make names descriptive:**
+
 ```bash
 # ❌ Vague and confusing
 VUE_APP_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com
@@ -967,15 +976,15 @@ VUE_APP_SETTINGS_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.
 
 **Stay consistent:** If you define a variable with one prefix, define it with both prefixes for consistency across environments.
 
----
+***
 
 ## Wrapping Up
 
 These guidelines help create code that's easy to read, maintain, and collaborate on. Remember:
 
-- **Consistency is key** - follow the same patterns throughout your project
-- **Clarity over cleverness** - write code that others can easily understand  
-- **When in doubt, be explicit** - clear types and descriptive names prevent bugs
-- **Use the tools** - let ESLint and TypeScript help you catch issues early
+* **Consistency is key** - follow the same patterns throughout your project
+* **Clarity over cleverness** - write code that others can easily understand
+* **When in doubt, be explicit** - clear types and descriptive names prevent bugs
+* **Use the tools** - let ESLint and TypeScript help you catch issues early
 
 Happy coding! 🚀

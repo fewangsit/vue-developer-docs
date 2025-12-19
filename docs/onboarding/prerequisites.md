@@ -2,6 +2,7 @@
 description: >-
   This tutorial will guide you through your first steps as a front-end
   programmer.
+noIndex: true
 icon: receipt
 ---
 
