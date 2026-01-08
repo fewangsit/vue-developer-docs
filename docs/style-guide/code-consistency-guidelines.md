@@ -472,6 +472,71 @@ const computedString = computed<string>(() => {
 const logMessage = (message: string): void => console.log(message);
 ```
 
+#### Template Refs with useTemplateRef
+
+With Vue 3.5 and `@vue/language-tools` 2.1 (powering both the IDE language service and `vue-tsc`), the type of refs created by `useTemplateRef()` in SFCs can be automatically inferred for static refs based on what element or component the matching `ref` attribute is used on.
+
+In cases where auto-inference is not possible (e.g., non-SFC usage or dynamic components), you can still cast the template ref to an explicit type via the generic argument.
+
+**For DOM Elements:**
+
+```vue
+<script setup lang="ts">
+import { useTemplateRef } from 'vue';
+
+const el = useTemplateRef<HTMLInputElement>('el');
+</script>
+
+<template>
+  <input ref="el" />
+</template>
+```
+
+To get the right DOM interface, check resources like [MDN](https://developer.mozilla.org/en-US/docs/Web/API).
+
+Note that for strict type safety, use optional chaining or type guards when accessing the ref, as it may be `null` until the component is mounted or if the element is conditionally rendered with `v-if`.
+
+**Usage Before Vue 3.5:**
+
+Template refs should be created with an explicit generic type argument and an initial value of `null`:
+
+```vue
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
+const el = ref<HTMLInputElement | null>(null);
+
+onMounted(() => {
+  el.value?.focus();
+});
+</script>
+
+<template>
+  <input ref="el" />
+</template>
+```
+
+**Typing Component Template Refs:**
+
+For component refs, use `InstanceType<typeof Component>` to extract the instance type:
+
+```vue
+<script setup lang="ts">
+import { useTemplateRef } from 'vue';
+import Foo from './Foo.vue';
+import Bar from './Bar.vue';
+
+type FooType = InstanceType<typeof Foo>;
+type BarType = InstanceType<typeof Bar>;
+
+const compRef = useTemplateRef<FooType | BarType>('comp');
+</script>
+
+<template>
+  <component :is="Math.random() > 0.5 ? Foo : Bar" ref="comp" />
+</template>
+```
+
 ### 2.3 Vue Router Setup
 
 Keep your routing simple and organized with a single `router/index.ts` file.
