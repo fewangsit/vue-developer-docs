@@ -1,3 +1,4 @@
+---
 icon: brackets-curly
 ---
 
