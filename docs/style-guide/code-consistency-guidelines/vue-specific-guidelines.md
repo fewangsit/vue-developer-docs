@@ -2,7 +2,7 @@
 icon: vuejs
 ---
 
-## 1 Vue Template Guidelines
+## 1. Vue Template Guidelines
 
 Keep templates clean and readable by following these simple rules.
 
@@ -39,7 +39,7 @@ const formatFullName = (name: string): string => {
 };
 ```
 
-## 2 Script Setup & TypeScript
+## 2. Script Setup & TypeScript
 
 ### 2.1 Defining Props
 
@@ -399,7 +399,7 @@ const compRef = useTemplateRef<FooType | BarType>('comp');
 </template>
 ```
 
-## 3 Vue Router Setup
+## 3. Vue Router Setup
 
 Keep your routing simple and organized with a single `router/index.ts` file.
 
@@ -448,7 +448,7 @@ Keep your routing simple and organized with a single `router/index.ts` file.
     }
     ```
 
-## 4 Provide / Inject Pattern
+## 4. Provide / Inject Pattern
 
 Use injection keys for type-safe dependency injection across your component tree.
 

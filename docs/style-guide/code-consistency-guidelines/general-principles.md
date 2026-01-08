@@ -4,7 +4,7 @@ icon: gear-code
 
 # General Principles
 
-## 1 Naming Conventions
+## 1. Naming Conventions
 
 ### 1.1 File Naming
 
@@ -98,7 +98,7 @@ To ensure readability, maintainability, and consistency across your codebase, fo
      * `hasPermission`
      * `canSubmitForm`
 
-## 2 Import and Export Conventions
+## 2. Import and Export Conventions
 
 ### 2.1 Prefer Named Imports Over Default
 
@@ -124,7 +124,7 @@ import UserCard from '@/components/UserCard.vue';
 import UserCard from '../../../components/UserCard.vue';
 ```
 
-## 3 General Best Practices
+## 3. General Best Practices
 
 ### 3.1 Use `let` Only in Block Scope
 

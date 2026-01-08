@@ -4,7 +4,7 @@ icon: sliders
 
 # Configuration & Environment
 
-## 1 Environment Variables
+## 1. Environment Variables
 
 Keep your configuration secure and organized with proper environment variable naming.
 
