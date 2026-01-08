@@ -99,7 +99,33 @@ To ensure readability, maintainability, and consistency across your codebase, fo
      * `hasPermission`
      * `canSubmitForm`
 
-### 1.2 General Best Practices
+### 1.2 Import and Export Conventions
+
+#### Prefer Named Imports Over Default
+
+Use named imports for clarity and tree-shaking benefits.
+
+```typescript
+// Good
+import { computed, ref } from 'vue';
+
+// Avoid (unless necessary for default exports)
+import Vue from 'vue';
+```
+
+#### Use Absolute Paths with Aliases
+
+Leverage Vite's path aliases (e.g., `@/components`) for imports longer than 2 levels.
+
+```typescript
+// Good
+import UserCard from '@/components/UserCard.vue';
+
+// Avoid (for deep paths)
+import UserCard from '../../../components/UserCard.vue';
+```
+
+### 1.3 General Best Practices
 
 #### Use `let` Only in Block Scope
 
