@@ -293,6 +293,73 @@ const handleStatusChange = (status: string, timestamp: number) => {
 };
 ```
 
+#### Defining Models
+
+Use `defineModel` for v-model support in Vue 3.4+. It simplifies two-way data binding between parent and child components.
+
+Always provide explicit typing for the model value.
+
+**Basic Usage:**
+
+```typescript
+const modelValue = defineModel<string>();
+```
+
+**With Options (e.g., custom name, required, default):**
+
+```typescript
+const visible = defineModel<boolean>('visible', { 
+  required: true,
+  default: () => false 
+});
+```
+
+**Parent Usage:**
+
+```html
+<!-- Default v-model -->
+<MyComponent v-model="userInput" />
+
+<!-- Custom model name -->
+<MyComponent v-model:visible="isModalVisible" />
+```
+
+This macro automatically handles the prop and emit for two-way binding, reducing boilerplate compared to manual `defineProps` and `defineEmits` setup.
+
+#### Defining Slots
+
+Use `defineSlots` to provide type safety for slots in your component. This is particularly useful for components that expose named slots with props.
+
+Define a slot interface and use it with the generic type.
+
+**Example:**
+
+```typescript
+import { Slot } from 'vue';
+
+const slots = defineSlots<{
+  default: Slot;
+  header?: Slot<{ title: string }>;
+  footer?: Slot;
+}>();
+```
+
+**Usage in Template (Parent):**
+
+```html
+<MyComponent>
+  <template #header="{ title }">
+    <h2>{{ title }}</h2>
+  </template>
+  <template #default>
+    <p>Default content</p>
+  </template>
+  <template #footer>
+    <button>Close</button>
+  </template>
+</MyComponent>
+```
+
 #### Creating Reactive Variables
 
 Below are general rules for creating reactive variables:

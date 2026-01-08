@@ -31,7 +31,7 @@ So, your SFC file should look like this:
     <!-- the Component Template -->
 </template>
 
-<style scoped>
+<style>
     /* The Component Style */
 </style>
 ```
@@ -97,6 +97,12 @@ const emit = defineEmits<{
 }>();
 
 const visible = defineModel<boolean>('visible', { required: true });
+
+const slots = defineSlots<{
+  default: Slot;
+  header?: Slot<{ title: string }>;
+  footer?: Slot;
+}>();
 
 /**
  * Grouping Vue.JS Lifecycle hooks
