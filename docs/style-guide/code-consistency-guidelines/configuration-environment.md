@@ -1,15 +1,14 @@
 ---
-title: Configuration & Environment
 icon: sliders
 ---
 
 # Configuration & Environment
 
-## 3.1 Environment Variables
+## 1 Environment Variables
 
 Keep your configuration secure and organized with proper environment variable naming.
 
-### Naming Rules
+### 1.1 Naming Rules
 
 **Use the VITE\_ prefix:**
 

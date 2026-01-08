@@ -1,13 +1,12 @@
 ---
-title: General Principles
 icon: gear-code
 ---
 
 # General Principles
 
-## 1.1 Naming Conventions
+## 1 Naming Conventions
 
-### File Naming
+### 1.1 File Naming
 
 **Vue Components & Module Folders:** Use `PascalCase` **TypeScript Files:** Use `camelCase` for `.ts` files (types, DTOs, utils, etc.)
 
@@ -33,7 +32,7 @@ PBIDialogForm.vue
 tagRFID.dto.ts
 ```
 
-### Component Organization
+### 1.2 Component Organization
 
 Organize components hierarchically from general to specific. This makes finding and understanding components much easier as your app grows.
 
@@ -67,7 +66,7 @@ Organize components hierarchically from general to specific. This makes finding 
     📄 BorrowedItemDetail.vue       # Individual item details
 ```
 
-### Variable Naming Conventions
+### 1.3 Variable Naming Conventions
 
 To ensure readability, maintainability, and consistency across your codebase, follow these naming conventions:
 
@@ -99,9 +98,9 @@ To ensure readability, maintainability, and consistency across your codebase, fo
      * `hasPermission`
      * `canSubmitForm`
 
-## 1.2 Import and Export Conventions
+## 2 Import and Export Conventions
 
-### Prefer Named Imports Over Default
+### 2.1 Prefer Named Imports Over Default
 
 Use named imports for clarity and tree-shaking benefits.
 
@@ -113,7 +112,7 @@ import { computed, ref } from 'vue';
 import Vue from 'vue';
 ```
 
-### Use Absolute Paths with Aliases
+### 2.2 Use Absolute Paths with Aliases
 
 Leverage Vite's path aliases (e.g., `@/components`) for imports longer than 2 levels.
 
@@ -125,9 +124,9 @@ import UserCard from '@/components/UserCard.vue';
 import UserCard from '../../../components/UserCard.vue';
 ```
 
-## 1.3 General Best Practices
+## 3 General Best Practices
 
-### Use `let` Only in Block Scope
+### 3.1 Use `let` Only in Block Scope
 
 Use `let` only inside block or function scopes. Avoid using it in global scope to ensure proper scoping and prevent unexpected behavior.
 
@@ -160,7 +159,7 @@ let count = 0;  // Avoid using `let` in the global scope of the script
 </script>
 ```
 
-### Don't Ignore ESLint Warnings
+### 3.2 Don't Ignore ESLint Warnings
 
 Always address warnings and errors from **ESLint**. This tools help maintain code quality by enforcing consistent style and catching potential issues.
 
@@ -168,20 +167,20 @@ By addressing the warnings and fixing them, you ensure cleaner, more maintainabl
 
 Some warning or errors can be autofixed by ESLint. Run `pnpm lint` to fix them.
 
-### Avoid Installing New Libraries Unless You Really Need Them
+### 3.3 Avoid Installing New Libraries Unless You Really Need Them
 
 Try to write your code using plain TypeScript or libraries you already have.
 
 For example, when formatting dates, you could install a library to help, but it's better to format them using TypeScript instead.
 
-### Don't Hardcode URLs or Sensitive Data
+### 3.4 Don't Hardcode URLs or Sensitive Data
 
 Sensitive information, like API keys or API URLs, should never be hardcoded in your source code. Instead:
 
 * Use a `.env` file to store them securely.
 * Access the values in your code using environment variables (e.g., `import.meta.env.VITE_API_URL`). [Environment Variables](../configuration-environment.md#environment-variables)
 
-### Use Template Literals with Backticks
+### 3.5 Use Template Literals with Backticks
 
 When combining strings or embedding variables, prefer **template literals** (backticks `` ` ``) over traditional string concatenation (`+`).
 

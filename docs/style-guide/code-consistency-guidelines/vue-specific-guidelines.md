@@ -1,15 +1,12 @@
 ---
-title: Vue Specific Guidelines
 icon: vuejs
 ---
 
-# Vue Specific Guidelines
-
-## 2.1 Vue Template Guidelines
+## 1 Vue Template Guidelines
 
 Keep templates clean and readable by following these simple rules.
 
-### Keep Templates Simple
+### 1.1 Keep Templates Simple
 
 Move complex logic to computed properties or methods instead of cluttering your template.
 
@@ -42,9 +39,9 @@ const formatFullName = (name: string): string => {
 };
 ```
 
-## 2.2 Script Setup & TypeScript
+## 2 Script Setup & TypeScript
 
-### Defining Props
+### 2.1 Defining Props
 
 Always use type-based declarations for better TypeScript support and code clarity.
 
@@ -69,7 +66,7 @@ defineProps<{
 <MyComponent user-name="John" />
 ```
 
-### Defining Emits
+### 2.2 Defining Emits
 
 Use type-based declarations for emits to get better TypeScript support.
 
@@ -93,7 +90,7 @@ const handleStatusChange = (status: string, timestamp: number) => {
 };
 ```
 
-### Defining Models (defineModel)
+### 2.3 Defining Models (defineModel)
 
 Use `defineModel` for v-model support in Vue 3.4+. It simplifies two-way data binding between parent and child components.
 
@@ -126,7 +123,7 @@ const visible = defineModel<boolean>('visible', {
 
 This macro automatically handles the prop and emit for two-way binding, reducing boilerplate compared to manual `defineProps` and `defineEmits` setup.
 
-### Defining Slots (defineSlots)
+### 2.4 Defining Slots (defineSlots)
 
 Use `defineSlots` to provide type safety for slots in your component. This is particularly useful for components that expose named slots with props.
 
@@ -168,7 +165,7 @@ In the child, you can render slots using `<slot>` or in render functions with `h
 
 This ensures compile-time checks for slot usage, preventing runtime errors from mismatched slot props.
 
-### Creating Reactive Variables
+### 2.5 Creating Reactive Variables
 
 Below are general rules for creating reactive variables:
 
@@ -272,7 +269,7 @@ Below are general rules for creating reactive variables:
       </template>
       ```
 
-### Creating Non-Reactive Constant Variables
+### 2.6 Creating Non-Reactive Constant Variables
 
 Just like reactive variables, always explicitly declare the types—even when TypeScript could infer them automatically.
 
@@ -309,7 +306,7 @@ Just like reactive variables, always explicitly declare the types—even when Ty
     const ENABLE_DEBUG_MODE: boolean = false;  // Enable/disable debug mode
     ```
 
-### Writing Computed Variables
+### 2.7 Writing Computed Variables
 
 * Follow **camelCase** naming conventions.
 * **Explicitly specify return types** to enforce type safety and prevent errors.
@@ -326,7 +323,7 @@ const computedString = computed<string>(() => {
 </script>
 ```
 
-### Creating Component Functions
+### 2.8 Creating Component Functions
 
 * Follow **camelCase** naming conventions.
 * Provide a **descriptive function name**.
@@ -337,7 +334,7 @@ const computedString = computed<string>(() => {
 const logMessage = (message: string): void => console.log(message);
 ```
 
-### Template Refs with useTemplateRef
+### 2.9 Template Refs with useTemplateRef
 
 With Vue 3.5 and `@vue/language-tools` 2.1 (powering both the IDE language service and `vue-tsc`), the type of refs created by `useTemplateRef()` in SFCs can be automatically inferred for static refs based on what element or component the matching `ref` attribute is used on.
 
@@ -402,7 +399,7 @@ const compRef = useTemplateRef<FooType | BarType>('comp');
 </template>
 ```
 
-## 2.3 Vue Router Setup
+## 3 Vue Router Setup
 
 Keep your routing simple and organized with a single `router/index.ts` file.
 
@@ -451,15 +448,15 @@ Keep your routing simple and organized with a single `router/index.ts` file.
     }
     ```
 
-## 2.4 Provide / Inject Pattern
+## 4 Provide / Inject Pattern
 
 Use injection keys for type-safe dependency injection across your component tree.
 
-### What is an Injection Key?
+### 4.1 What is an Injection Key?
 
 A strongly typed symbol used for `provide` and `inject`. It ensures type safety and prevents naming conflicts.
 
-### Rules for Using Provide / Inject
+### 4.2 Rules for Using Provide / Inject
 
 1.  **Use Symbols as Injection Keys** Define keys as unique `Symbol`s.
 
@@ -521,7 +518,7 @@ A strongly typed symbol used for `provide` and `inject`. It ensures type safety 
     export const ExampleKey: InjectionKey<ExampleType> = Symbol();
     ```
 
-### Example Usage
+### 4.3 Example Usage
 
 **Centralized Key File:**
 
