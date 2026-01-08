@@ -1,18 +1,20 @@
 ---
 title: Vue Specific Guidelines
+icon: vuejs
 ---
 
-## 2. Vue.js Specific Guidelines
+# Vue Specific Guidelines
 
-### 2.1 Vue Template Guidelines
+## 2.1 Vue Template Guidelines
 
 Keep templates clean and readable by following these simple rules.
 
-#### Keep Templates Simple
+### Keep Templates Simple
 
 Move complex logic to computed properties or methods instead of cluttering your template.
 
 **Don't:**
+
 ```html
 <div>
   {{
@@ -25,6 +27,7 @@ Move complex logic to computed properties or methods instead of cluttering your 
 ```
 
 **Do:**
+
 ```html
 <div>{{ formatFullName(fullName) }}</div>
 ```
@@ -39,9 +42,9 @@ const formatFullName = (name: string): string => {
 };
 ```
 
-### 2.2 Script Setup & TypeScript
+## 2.2 Script Setup & TypeScript
 
-#### Defining Props
+### Defining Props
 
 Always use type-based declarations for better TypeScript support and code clarity.
 
@@ -66,7 +69,7 @@ defineProps<{
 <MyComponent user-name="John" />
 ```
 
-#### Defining Emits
+### Defining Emits
 
 Use type-based declarations for emits to get better TypeScript support.
 
@@ -90,7 +93,7 @@ const handleStatusChange = (status: string, timestamp: number) => {
 };
 ```
 
-#### Defining Models (defineModel)
+### Defining Models (defineModel)
 
 Use `defineModel` for v-model support in Vue 3.4+. It simplifies two-way data binding between parent and child components.
 
@@ -123,7 +126,7 @@ const visible = defineModel<boolean>('visible', {
 
 This macro automatically handles the prop and emit for two-way binding, reducing boilerplate compared to manual `defineProps` and `defineEmits` setup.
 
-#### Defining Slots (defineSlots)
+### Defining Slots (defineSlots)
 
 Use `defineSlots` to provide type safety for slots in your component. This is particularly useful for components that expose named slots with props.
 
@@ -165,12 +168,12 @@ In the child, you can render slots using `<slot>` or in render functions with `h
 
 This ensures compile-time checks for slot usage, preventing runtime errors from mismatched slot props.
 
-#### Creating Reactive Variables
+### Creating Reactive Variables
 
 Below are general rules for creating reactive variables:
 
 * **Always use** `const` to declare the variable.
-* **Always specify the generic type for the** `ref` **variable**, even if the type could be auto-inferred by the initial value. This improves type safety and clarity.
+*   **Always specify the generic type for the** `ref` **variable**, even if the type could be auto-inferred by the initial value. This improves type safety and clarity.
 
     **Example:**
 
@@ -195,16 +198,14 @@ Below are general rules for creating reactive variables:
         Here, `userData` is a `ref` that can either hold a `User` object or be `undefined`. It's a good practice to initialize `ref` with `undefined` if you expect the value to be potentially absent at first.
 *   When the data does not need to be reactive, use a plain `const` declaration. Avoid using `ref` for non-reactive values to keep the code efficient.
 
-    Additionally, for non-reactive constants, follow the naming convention of **UPPERCASE_SNAKE_CASE** to clearly distinguish them from reactive variables.
+    Additionally, for non-reactive constants, follow the naming convention of **UPPERCASE\_SNAKE\_CASE** to clearly distinguish them from reactive variables.
 
     **Example:**
 
     ```typescript
     const DEFAULT_TIMOUT = 60000;  // Non-reactive, will not be changed
     ```
-
 * **When to use `ref` Variables?**
-
   *   When you **need to store deeply reactive objects** that any changes to a nested property will trigger an update.
 
       **Example:**
@@ -224,10 +225,7 @@ Below are general rules for creating reactive variables:
         <Button :label="userData.address.city" @click="userData.address.city = 'Los Angeles'" />
       </template>
       ```
-
-
 * **When to use `shallowRef` Variables?**
-
   *   **For primitive values** such as numbers, strings, booleans, or even for single items like `Date` or `RegExp` that don't need deep reactivity.
 
       **Example:**
@@ -274,18 +272,17 @@ Below are general rules for creating reactive variables:
       </template>
       ```
 
-#### Creating Non-Reactive Constant Variables
+### Creating Non-Reactive Constant Variables
 
 Just like reactive variables, always explicitly declare the types—even when TypeScript could infer them automatically.
 
-1. Primitive Type Constants
+1.  Primitive Type Constants
 
     ```typescript
     const API_BASE_URL: string = 'https://api.example.com';  // Base URL for API
     const MAX_RETRIES: number = 3;  // Maximum number of retry attempts
     ```
-
-2. Raw Object Constants
+2.  Raw Object Constants
 
     ```typescript
     const BUTTON_STYLES: Record<string, string> = {
@@ -299,23 +296,20 @@ Just like reactive variables, always explicitly declare the types—even when Ty
       invalidEmail: 'Please enter a valid email address.',
     };  // Common validation error messages
     ```
-
-3. Arrays
+3.  Arrays
 
     ```typescript
     const SUPPORTED_LANGUAGES: string[] = ['en', 'es', 'fr', 'de'];  // Supported languages
     const DEFAULT_TAGS: string[] = ['vue', 'typescript', 'javascript'];  // Default tags for a blog
     ```
-
-4. Boolean Flags
+4.  Boolean Flags
 
     ```typescript
     const IS_PRODUCTION: boolean = true;  // Flag to check if the app is in production mode
     const ENABLE_DEBUG_MODE: boolean = false;  // Enable/disable debug mode
     ```
 
-
-#### Writing Computed Variables
+### Writing Computed Variables
 
 * Follow **camelCase** naming conventions.
 * **Explicitly specify return types** to enforce type safety and prevent errors.
@@ -332,8 +326,7 @@ const computedString = computed<string>(() => {
 </script>
 ```
 
-
-#### Creating Component Functions
+### Creating Component Functions
 
 * Follow **camelCase** naming conventions.
 * Provide a **descriptive function name**.
@@ -344,7 +337,7 @@ const computedString = computed<string>(() => {
 const logMessage = (message: string): void => console.log(message);
 ```
 
-#### Template Refs with useTemplateRef
+### Template Refs with useTemplateRef
 
 With Vue 3.5 and `@vue/language-tools` 2.1 (powering both the IDE language service and `vue-tsc`), the type of refs created by `useTemplateRef()` in SFCs can be automatically inferred for static refs based on what element or component the matching `ref` attribute is used on.
 
@@ -409,11 +402,11 @@ const compRef = useTemplateRef<FooType | BarType>('comp');
 </template>
 ```
 
-### 2.3 Vue Router Setup
+## 2.3 Vue Router Setup
 
 Keep your routing simple and organized with a single `router/index.ts` file.
 
-1. **Use Arrow Functions to Import Components**
+1.  **Use Arrow Functions to Import Components**
 
     Components should be loaded lazily using arrow functions in the `import()` statement. This ensures efficient code splitting.
 
@@ -422,8 +415,7 @@ Keep your routing simple and organized with a single `router/index.ts` file.
         component: () => import('@/layout/MainLayout.vue'),
     }
     ```
-
-2. **Import Only Views or Layout Components**
+2.  **Import Only Views or Layout Components**
 
     Each route should import a component from the `views` or `layout` directory. Do not import components from `commons` or `modules`.
 
@@ -442,8 +434,7 @@ Keep your routing simple and organized with a single `router/index.ts` file.
         ],
     }
     ```
-
-3. **Follow Route Naming Convention**
+3.  **Follow Route Naming Convention**
 
     The `name` property of a route should adhere to the following rules:
 
@@ -460,33 +451,29 @@ Keep your routing simple and organized with a single `router/index.ts` file.
     }
     ```
 
-### 2.4 Provide / Inject Pattern
+## 2.4 Provide / Inject Pattern
 
 Use injection keys for type-safe dependency injection across your component tree.
 
-#### What is an Injection Key?
+### What is an Injection Key?
+
 A strongly typed symbol used for `provide` and `inject`. It ensures type safety and prevents naming conflicts.
 
-#### Rules for Using Provide / Inject
+### Rules for Using Provide / Inject
 
-1. **Use Symbols as Injection Keys**
-    Define keys as unique `Symbol`s.
+1.  **Use Symbols as Injection Keys** Define keys as unique `Symbol`s.
 
     ```typescript
     const ExampleKey = Symbol();
     ```
-
-2. **Define Types for Provided Values**
-    Specify the interface for the injected value.
+2.  **Define Types for Provided Values** Specify the interface for the injected value.
 
     ```typescript
     interface ExampleType {
       exampleProperty: string;
     }
     ```
-
-3. **Centralize Injection Keys**
-    Store keys in `src/injections/index.ts`.
+3.  **Centralize Injection Keys** Store keys in `src/injections/index.ts`.
 
     ```typescript
     // src/injections/index.ts
@@ -495,9 +482,7 @@ A strongly typed symbol used for `provide` and `inject`. It ensures type safety 
 
     export const ExampleKey: InjectionKey<ExampleType> = Symbol();
     ```
-
-4. **Use Provide with Strong Typing**
-    Ensure the provided value matches the key’s type.
+4.  **Use Provide with Strong Typing** Ensure the provided value matches the key’s type.
 
     ```typescript
     import { ExampleKey } from '@/injections';
@@ -509,24 +494,22 @@ A strongly typed symbol used for `provide` and `inject`. It ensures type safety 
 
     provide(ExampleKey, exampleValue);
     ```
-
-5. **Handle Injection Safely**
-    Use a fallback value or optional chaining.
+5.  **Handle Injection Safely** Use a fallback value or optional chaining.
 
     **With a default value:**
+
     ```typescript
     const defaultExampleValue: ExampleType = { exampleProperty: 'Default' };
     const injectedValue = inject(ExampleKey, defaultExampleValue);
     ```
 
     **With optional chaining:**
+
     ```typescript
     const injectedValue = inject<ExampleType>(ExampleKey);
     console.log(injectedValue?.exampleProperty);
     ```
-
-6. **Document Injection Keys**
-    Add clear documentation for each key.
+6.  **Document Injection Keys** Add clear documentation for each key.
 
     ```typescript
     /**
@@ -538,9 +521,10 @@ A strongly typed symbol used for `provide` and `inject`. It ensures type safety 
     export const ExampleKey: InjectionKey<ExampleType> = Symbol();
     ```
 
-#### Example Usage
+### Example Usage
 
 **Centralized Key File:**
+
 ```typescript
 // src/injections/example.ts
 import { InjectionKey, ShallowRef } from 'vue';
@@ -550,6 +534,7 @@ export const ExampleKey: InjectionKey<ShallowRef<ExampleType>> = Symbol();
 ```
 
 **Provider Component:**
+
 ```vue
 <script setup lang="ts">
 import { provide, shallowRef } from 'vue';
@@ -565,6 +550,7 @@ provide(ExampleKey, exampleValue);
 ```
 
 **Consumer Component:**
+
 ```vue
 <script setup lang="ts">
 import { inject } from 'vue';

@@ -1,16 +1,17 @@
 ---
 title: Configuration & Environment
+icon: sliders
 ---
 
-## 3. Configuration & Environment
+# Configuration & Environment
 
-### 3.1 Environment Variables
+## 3.1 Environment Variables
 
 Keep your configuration secure and organized with proper environment variable naming.
 
-#### Naming Rules
+### Naming Rules
 
-**Use the VITE_ prefix:**
+**Use the VITE\_ prefix:**
 
 * `VITE_` for all environments (development and production)
 
@@ -24,4 +25,4 @@ VITE_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com
 VITE_SETTINGS_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com
 ```
 
-**Stay consistent:** Use the VITE_ prefix for all environment variables across environments.
+**Stay consistent:** Use the VITE\_ prefix for all environment variables across environments.
