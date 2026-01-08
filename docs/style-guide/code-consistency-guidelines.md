@@ -1,8 +1,6 @@
 icon: brackets-curly
 ---
 
-# Code Consistency Guidelines
-
 These guidelines help maintain consistent, readable code across all projects. Following these standards makes collaboration easier and keeps our codebase maintainable for everyone on the team.
 
 ## 1. General Code Principles
