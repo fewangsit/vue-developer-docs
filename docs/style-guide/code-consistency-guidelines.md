@@ -298,7 +298,7 @@ Below are general rules for creating reactive variables:
     </template>
     ```
 
-#### 3.4 Creating Non-Reactive Constant Variables
+### Creating Non-Reactive Constant Variables
 
 As with the reactive variables, you should always define the types even if it can be auto-inferred.
 
@@ -342,7 +342,7 @@ const ENABLE_DEBUG_MODE: boolean = false;  // Enable/disable debug mode
 
 ***
 
-#### 3.5 Writing Computed Variables
+### Writing Computed Variables
 
 * Follow **camelCase** naming conventions.
 * **Explicitly specify return types** to enforce type safety and prevent errors.
@@ -361,7 +361,7 @@ const computedString = computed<string>(() => {
 
 ***
 
-#### 3.6 Creating Component Functions
+### Creating Component Functions
 
 * Follow **camelCase** naming conventions.
 * Provide a **descriptive function name**.
@@ -407,15 +407,17 @@ let count = 0;  // Avoid using `let` in the global scope of the script
 
 ***
 
-#### 3.9 Don't Ignore ESLint Warnings
+### Don't Ignore ESLint Warnings
 
 Always address warnings and errors from **ESLint**. This tools help maintain code quality by enforcing consistent style and catching potential issues.
 
 By addressing the warnings and fixing them, you ensure cleaner, more maintainable code.
 
+Some warning or errors can be autofixed by ESLint. Run `pnpm lint` to fix them.
+
 ***
 
-#### 3.10 Avoid Installing New Libraries Unless You Really Need Them
+### Avoid Installing New Libraries Unless You Really Need Them
 
 Try to write your code using plain TypeScript or libraries you already have.
 
@@ -423,7 +425,7 @@ For example, when formatting dates, you could install a library to help, but it'
 
 ***
 
-#### 3.11 Don't Hardcode URLs or Sensitive Data
+### Don't Hardcode URLs or Sensitive Data
 
 Sensitive information, like API keys or API URLs, should never be hardcoded in your source code. Instead:
 
@@ -432,7 +434,7 @@ Sensitive information, like API keys or API URLs, should never be hardcoded in y
 
 ***
 
-#### 3.12 Use Template Literals with Backticks
+### Use Template Literals with Backticks
 
 When combining strings or embedding variables, prefer **template literals** (backticks `` ` ``) over traditional string concatenation (`+`).
 
@@ -468,15 +470,23 @@ Components should be loaded lazily using arrow functions in the `import()` state
 }
 ```
 
-**2. Import Only Views Components**
+**2. Import Only Views or Layout Components**
 
-Each route should import a component from the `views` directory. Do not import components from `commons` or `modules`.
+Each route should import a component from the `views` or `layout` directory. Do not import components from `commons` or `modules`.
 
 ```typescript
 {
-    path: '/example',
-    name: 'ExampleView',
-    component: () => import('@/views/ExampleView.vue'),
+    path: '/',
+    name: 'ExampleVLayout',
+    component: () => import('@/Layout/ExampleLayout.vue'),
+    children: [
+        {
+            path: '/example',
+            name: 'ExampleView',
+            component: () => import('@/views/ExampleView.vue'),
+        },
+        ...// Add more child routes as needed
+    ],
 }
 ```
 
@@ -503,12 +513,12 @@ Use injection keys for type-safe dependency injection across your component tree
 
 ***
 
-#### 5.1 What is an Injection Key?
+### What is an Injection Key?
 A strongly typed symbol used for `provide` and `inject`. It ensures type safety and prevents naming conflicts.
 
 ***
 
-#### 5.2 Rules for Using Provide / Inject
+### Rules for Using Provide / Inject
 
 **1. Use Symbols as Injection Keys**
 Define keys as unique `Symbol`s.
@@ -581,7 +591,7 @@ export const ExampleKey: InjectionKey<ExampleType> = Symbol();
 
 ***
 
-#### 5.3 Example Usage
+### Example Usage
 
 **Centralized Key File:**
 ```typescript
