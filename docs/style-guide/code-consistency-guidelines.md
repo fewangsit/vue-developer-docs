@@ -1,4 +1,3 @@
----
 icon: brackets-curly
 ---
 
@@ -6,9 +5,11 @@ icon: brackets-curly
 
 These guidelines help maintain consistent, readable code across all projects. Following these standards makes collaboration easier and keeps our codebase maintainable for everyone on the team.
 
-## 1. Naming Conventions
+## 1. General Code Principles
 
-### File Naming
+### 1.1 Naming Conventions
+
+#### File Naming
 
 **Vue Components & Module Folders:** Use `PascalCase` **TypeScript Files:** Use `camelCase` for `.ts` files (types, DTOs, utils, etc.)
 
@@ -34,7 +35,7 @@ PBIDialogForm.vue
 tagRFID.dto.ts
 ```
 
-### Component Organization
+#### Component Organization
 
 Organize components hierarchically from general to specific. This makes finding and understanding components much easier as your app grows.
 
@@ -68,7 +69,7 @@ Organize components hierarchically from general to specific. This makes finding 
     📄 BorrowedItemDetail.vue       # Individual item details
 ```
 
-#### 1.3 Variable Naming Conventions
+#### Variable Naming Conventions
 
 To ensure readability, maintainability, and consistency across your codebase, follow these naming conventions:
 
@@ -100,11 +101,94 @@ To ensure readability, maintainability, and consistency across your codebase, fo
      * `hasPermission`
      * `canSubmitForm`
 
-## 2. Vue Template Guidelines
+### 1.2 General Best Practices
+
+#### Use `let` Only in Block Scope
+
+Use `let` only inside block or function scopes. Avoid using it in global scope to ensure proper scoping and prevent unexpected behavior.
+
+**Example:**
+
+```typescript
+export const getStatusSeverity = (status?: string): Severity => {
+  let severity: Severity;
+
+  switch (status) {
+    case 'Available':
+      severity = 'success';
+      break;
+    case 'Damaged':
+      severity = 'danger';
+      break;
+    default:
+      severity = 'primary';
+  }
+
+  return severity;
+};
+```
+
+**Avoid:**
+
+```vue
+<script setup lang="ts">
+let count = 0;  // Avoid using `let` in the global scope of the script
+</script>
+```
+
+
+#### Don't Ignore ESLint Warnings
+
+Always address warnings and errors from **ESLint**. This tools help maintain code quality by enforcing consistent style and catching potential issues.
+
+By addressing the warnings and fixing them, you ensure cleaner, more maintainable code.
+
+Some warning or errors can be autofixed by ESLint. Run `pnpm lint` to fix them.
+
+
+#### Avoid Installing New Libraries Unless You Really Need Them
+
+Try to write your code using plain TypeScript or libraries you already have.
+
+For example, when formatting dates, you could install a library to help, but it's better to format them using TypeScript instead.
+
+
+#### Don't Hardcode URLs or Sensitive Data
+
+Sensitive information, like API keys or API URLs, should never be hardcoded in your source code. Instead:
+
+* Use a `.env` file to store them securely.
+* Access the values in your code using environment variables (e.g., `import.meta.env.VITE_API_URL`). [Environment Variables](#3-configuration--environment-31-environment-variables)
+
+
+#### Use Template Literals with Backticks
+
+When combining strings or embedding variables, prefer **template literals** (backticks `` ` ``) over traditional string concatenation (`+`).
+
+**Example:**
+
+**Avoid** (String Concatenation):
+
+```typescript
+const name = "Alice";
+const message = "Hello, " + name + "! Welcome to " + new Date().getFullYear() + ".";
+```
+
+**Prefer** (Template Literals):
+
+```typescript
+const name = "Alice";
+const message = `Hello, ${name}! Welcome to ${new Date().getFullYear()}.`;
+```
+
+
+## 2. Vue.js Specific Guidelines
+
+### 2.1 Vue Template Guidelines
 
 Keep templates clean and readable by following these simple rules.
 
-### Keep Templates Simple
+#### Keep Templates Simple
 
 Move complex logic to computed properties or methods instead of cluttering your template.
 
@@ -124,6 +208,7 @@ Move complex logic to computed properties or methods instead of cluttering your 
 ```typescript
 <div>{{ formatFullName(fullName) }}</div>
 
+// In script setup
 const formatFullName = (name: string): string => {
   return name
     .split(' ')
@@ -132,11 +217,10 @@ const formatFullName = (name: string): string => {
 };
 ```
 
-***
 
-## 3. Script Setup & TypeScript
+### 2.2 Script Setup & TypeScript
 
-### Defining Props
+#### Defining Props
 
 Always use type-based declarations for better TypeScript support and code clarity.
 
@@ -160,9 +244,8 @@ defineProps<{
 <!-- In parent template -->
 <MyComponent user-name="John" />
 ```
-***
 
-### Defining Emits
+#### Defining Emits
 
 Use type-based declarations for emits to get better TypeScript support.
 
@@ -185,9 +268,8 @@ const handleStatusChange = (status: string, timestamp: number) => {
   console.log(`Status: ${status} at ${timestamp}`);
 };
 ```
-***
 
-### Creating Reactive Variables
+#### Creating Reactive Variables
 
 Below are general rules for creating reactive variables:
 
@@ -224,125 +306,120 @@ Below are general rules for creating reactive variables:
     ```typescript
     const DEFAULT_TIMOUT = 60000;  // Non-reactive, will not be changed
     ```
-***
 
-**When to use `ref` Variables?**
+* **When to use `ref` Variables?**
 
-*   When you **need to store deeply reactive objects** that any changes to a nested property will trigger an update.
+  *   When you **need to store deeply reactive objects** that any changes to a nested property will trigger an update.
 
-    **Example:**
+      **Example:**
 
-    ```vue
-    <script setup lang="ts">
-    const userData = ref<User>({
-      name: 'John Doe',
-      address: {
-        city: 'New York',
-        country: 'United States'
-      },
-    });
-    </script>
+      ```vue
+      <script setup lang="ts">
+      const userData = ref<User>({
+        name: 'John Doe',
+        address: {
+          city: 'New York',
+          country: 'United States'
+        },
+      });
+      </script>
 
-    <template>
-      <Button :label="userData.address.city" @click="userData.address.city = 'Los Angeles'" />
-    </template>
-    ```
+      <template>
+        <Button :label="userData.address.city" @click="userData.address.city = 'Los Angeles'" />
+      </template>
+      ```
 
-***
 
-**When to use `shallowRef` Variables?**
+* **When to use `shallowRef` Variables?**
 
-*   **For primitive values** such as numbers, strings, booleans, or even for single items like `Date` or `RegExp` that don't need deep reactivity.
+  *   **For primitive values** such as numbers, strings, booleans, or even for single items like `Date` or `RegExp` that don't need deep reactivity.
 
-    **Example:**
+      **Example:**
+
+      ```typescript
+      const isActive = shallowRef<boolean>(false);
+      ```
+
+      You might think that `ref` can also handle this case, **but for consistency**, use `shallowRef`!
+  *   Use `shallowRef` variables for large data structures **when you don't need reactivity on nested properties**. Only changes in `.value` will trigger an update.
+
+      This is **useful for performance optimization** when dealing with large or complex data structures where you don't want to track every nested change.
+
+      **Example:**
+
+      ```vue
+      <script setup lang="ts">
+      import { shallowRef } from 'vue';
+      import { Button } from 'wangsvue';
+      import { User } from './types/user.type';
+
+      const userData = shallowRef<User>({
+        name: 'John Doe',
+        address: {
+          city: 'New York',
+          country: 'United States',
+        },
+      });
+
+      const updateCity = (newCity: string): void => {
+        // Update the entire userData.value object to trigger updates
+        userData.value = {
+          ...userData.value,
+          address: {
+            ...userData.value.address,
+            city: newCity,
+          },
+        };
+      };
+      </script>
+
+      <template>
+        <Button :label="userData.address.city" @click="updateCity('Los Angeles')" />
+      </template>
+      ```
+
+#### Creating Non-Reactive Constant Variables
+
+Just like reactive variables, always explicitly declare the types—even when TypeScript could infer them automatically.
+
+1. Primitive Type Constants
 
     ```typescript
-    const isActive = shallowRef<boolean>(false);
+    const API_BASE_URL: string = 'https://api.example.com';  // Base URL for API
+    const MAX_RETRIES: number = 3;  // Maximum number of retry attempts
     ```
 
-    You might think that `ref` can also handle this case, **but for consistency**, use `shallowRef`!
-*   Use `shallowRef` variables for large data structures **when you don't need reactivity on nested properties**. Only changes in `.value` will trigger an update.
+2. Raw Object Constants
 
-    This is **useful for performance optimization** when dealing with large or complex data structures where you don't want to track every nested change.
+    ```typescript
+    const BUTTON_STYLES: Record<string, string> = {
+      backgroundColor: '#007BFF',
+      color: '#FFFFFF',
+      borderRadius: '4px',
+    };  // Button styling
 
-    **Example:**
-
-    ```vue
-    <script setup lang="ts">
-    import { shallowRef } from 'vue';
-    import { Button } from 'wangsvue';
-    import { User } from './types/user.type';
-
-    const userData = shallowRef<User>({
-      name: 'John Doe',
-      address: {
-        city: 'New York',
-        country: 'United States',
-      },
-    });
-
-    const updateCity = (newCity: string): void => {
-      // Update the entire userData.value object to trigger updates
-      userData.value = {
-        ...userData.value,
-        address: {
-          ...userData.value.address,
-          city: newCity,
-        },
-      };
-    };
-    </script>
-
-    <template>
-      <Button :label="userData.address.city" @click="updateCity('Los Angeles')" />
-    </template>
+    const ERROR_MESSAGES: Record<ErrorKeys, string> = {
+      required: 'This field is required.',
+      invalidEmail: 'Please enter a valid email address.',
+    };  // Common validation error messages
     ```
 
-### Creating Non-Reactive Constant Variables
+3. Arrays
 
-As with the reactive variables, you should always define the types even if it can be auto-inferred.
+    ```typescript
+    const SUPPORTED_LANGUAGES: string[] = ['en', 'es', 'fr', 'de'];  // Supported languages
+    const DEFAULT_TAGS: string[] = ['vue', 'typescript', 'javascript'];  // Default tags for a blog
+    ```
 
-***
+4. Boolean Flags
 
-**a. Primitive Type Constants**
+    ```typescript
+    const IS_PRODUCTION: boolean = true;  // Flag to check if the app is in production mode
+    const ENABLE_DEBUG_MODE: boolean = false;  // Enable/disable debug mode
+    ```
 
-```typescript
-const API_BASE_URL: string = 'https://api.example.com';  // Base URL for API
-const MAX_RETRIES: number = 3;  // Maximum number of retry attempts
-```
 
-**b. Raw Object Constants**
-
-```typescript
-const BUTTON_STYLES: Record<string, string> = {
-  backgroundColor: '#007BFF',
-  color: '#FFFFFF',
-  borderRadius: '4px',
-};  // Button styling
-
-const ERROR_MESSAGES: Record<ErrorKeys, string> = {
-  required: 'This field is required.',
-  invalidEmail: 'Please enter a valid email address.',
-};  // Common validation error messages
-```
-
-**c. Arrays**
-
-```typescript
-const SUPPORTED_LANGUAGES: string[] = ['en', 'es', 'fr', 'de'];  // Supported languages
-const DEFAULT_TAGS: string[] = ['vue', 'typescript', 'javascript'];  // Default tags for a blog
-```
-
-**d. Boolean Flags**
-
-```typescript
-const IS_PRODUCTION: boolean = true;  // Flag to check if the app is in production mode
-const ENABLE_DEBUG_MODE: boolean = false;  // Enable/disable debug mode
-```
-
-***
-
-### Writing Computed Variables
+#### Writing Computed Variables
 
 * Follow **camelCase** naming conventions.
 * **Explicitly specify return types** to enforce type safety and prevent errors.
@@ -359,9 +436,8 @@ const computedString = computed<string>(() => {
 </script>
 ```
 
-***
 
-### Creating Component Functions
+#### Creating Component Functions
 
 * Follow **camelCase** naming conventions.
 * Provide a **descriptive function name**.
@@ -372,226 +448,139 @@ const computedString = computed<string>(() => {
 const logMessage = (message: string): void => console.log(message);
 ```
 
-#### 3.8 Use `let` Only in Block Scope
-
-Use `let` only inside block or function scopes. Avoid using it in global scope to ensure proper scoping and prevent unexpected behavior.
-
-**Example:**
-
-```typescript
-export const getStatusSeverity = (status?: string): Severity => {
-  let severity: Severity;
-
-  switch (status) {
-    case 'Available':
-      severity = 'success';
-      break;
-    case 'Damaged':
-      severity = 'danger';
-      break;
-    default:
-      severity = 'primary';
-  }
-
-  return severity;
-};
-```
-
-**Avoid:**
-
-```vue
-<script setup lang="ts">
-let count = 0;  // Avoid using `let` in the global scope of the script
-</script>
-```
-
-***
-
-### Don't Ignore ESLint Warnings
-
-Always address warnings and errors from **ESLint**. This tools help maintain code quality by enforcing consistent style and catching potential issues.
-
-By addressing the warnings and fixing them, you ensure cleaner, more maintainable code.
-
-Some warning or errors can be autofixed by ESLint. Run `pnpm lint` to fix them.
-
-***
-
-### Avoid Installing New Libraries Unless You Really Need Them
-
-Try to write your code using plain TypeScript or libraries you already have.
-
-For example, when formatting dates, you could install a library to help, but it's better to format them using TypeScript instead.
-
-***
-
-### Don't Hardcode URLs or Sensitive Data
-
-Sensitive information, like API keys or API URLs, should never be hardcoded in your source code. Instead:
-
-* Use a `.env` file to store them securely.
-* Access the values in your code using environment variables (e.g., `process.env.VUE_APP_API_URL`).
-
-***
-
-### Use Template Literals with Backticks
-
-When combining strings or embedding variables, prefer **template literals** (backticks `` ` ``) over traditional string concatenation (`+`).
-
-**Example:**
-
-**Avoid** (String Concatenation):
-
-```typescript
-const name = "Alice";
-const message = "Hello, " + name + "! Welcome to " + new Date().getFullYear() + ".";
-```
-
-**Prefer** (Template Literals):
-
-```typescript
-const name = "Alice";
-const message = `Hello, ${name}! Welcome to ${new Date().getFullYear()}.`;
-```
-
-***
-
-## 4. Vue Router Setup
+### 2.3 Vue Router Setup
 
 Keep your routing simple and organized with a single `router/index.ts` file.
 
-**1. Use Arrow Functions to Import Components**
+1. **Use Arrow Functions to Import Components**
 
-Components should be loaded lazily using arrow functions in the `import()` statement. This ensures efficient code splitting.
+    Components should be loaded lazily using arrow functions in the `import()` statement. This ensures efficient code splitting.
 
-```typescript
-{
-    component: () => import('@/layout/MainLayout.vue'),
-}
-```
+    ```typescript
+    {
+        component: () => import('@/layout/MainLayout.vue'),
+    }
+    ```
 
-**2. Import Only Views or Layout Components**
+2. **Import Only Views or Layout Components**
 
-Each route should import a component from the `views` or `layout` directory. Do not import components from `commons` or `modules`.
+    Each route should import a component from the `views` or `layout` directory. Do not import components from `commons` or `modules`.
 
-```typescript
-{
-    path: '/',
-    name: 'ExampleVLayout',
-    component: () => import('@/Layout/ExampleLayout.vue'),
-    children: [
-        {
-            path: '/example',
-            name: 'ExampleView',
-            component: () => import('@/views/ExampleView.vue'),
-        },
-        ...// Add more child routes as needed
-    ],
-}
-```
+    ```typescript
+    {
+        path: '/',
+        name: 'ExampleVLayout',
+        component: () => import('@/Layout/ExampleLayout.vue'),
+        children: [
+            {
+                path: '/example',
+                name: 'ExampleView',
+                component: () => import('@/views/ExampleView.vue'),
+            },
+            ...// Add more child routes as needed
+        ],
+    }
+    ```
 
-**3. Follow Route Naming Convention**
+3. **Follow Route Naming Convention**
 
-The `name` property of a route should adhere to the following rules:
+    The `name` property of a route should adhere to the following rules:
 
-* Use **PascalCase**.
-* Match the name of the corresponding view component.
+    * Use **PascalCase**.
+    * Match the name of the corresponding view component.
 
-**Example:**
+    **Example:**
 
-```typescript
-{
-    path: '/contoh',
-    name: 'ExampleView',
-    component: () => import('@/views/ExampleView.vue'),
-}
-```
+    ```typescript
+    {
+        path: '/contoh',
+        name: 'ExampleView',
+        component: () => import('@/views/ExampleView.vue'),
+    }
+    ```
 
-## 5. Provide / Inject Pattern
+### 2.4 Provide / Inject Pattern
 
 Use injection keys for type-safe dependency injection across your component tree.
 
-***
 
-### What is an Injection Key?
+#### What is an Injection Key?
 A strongly typed symbol used for `provide` and `inject`. It ensures type safety and prevents naming conflicts.
 
-***
 
-### Rules for Using Provide / Inject
+#### Rules for Using Provide / Inject
 
-**1. Use Symbols as Injection Keys**
-Define keys as unique `Symbol`s.
+1. **Use Symbols as Injection Keys**
+    Define keys as unique `Symbol`s.
 
-```typescript
-const ExampleKey = Symbol();
-```
+    ```typescript
+    const ExampleKey = Symbol();
+    ```
 
-**2. Define Types for Provided Values**
-Specify the interface for the injected value.
+2. **Define Types for Provided Values**
+    Specify the interface for the injected value.
 
-```typescript
-interface ExampleType {
-  exampleProperty: string;
-}
-```
+    ```typescript
+    interface ExampleType {
+      exampleProperty: string;
+    }
+    ```
 
-**3. Centralize Injection Keys**
-Store keys in `src/injections/index.ts`.
+3. **Centralize Injection Keys**
+    Store keys in `src/injections/index.ts`.
 
-```typescript
-// src/injections/index.ts
-import { InjectionKey } from 'vue';
-import { ExampleType } from '@/types/example.type';
+    ```typescript
+    // src/injections/index.ts
+    import { InjectionKey } from 'vue';
+    import { ExampleType } from '@/types/example.type';
 
-export const ExampleKey: InjectionKey<ExampleType> = Symbol();
-```
+    export const ExampleKey: InjectionKey<ExampleType> = Symbol();
+    ```
 
-**4. Use Provide with Strong Typing**
-Ensure the provided value matches the key’s type.
+4. **Use Provide with Strong Typing**
+    Ensure the provided value matches the key’s type.
 
-```typescript
-import { ExampleKey } from '@/injections';
-import { ExampleType } from '@/types/example.type';
+    ```typescript
+    import { ExampleKey } from '@/injections';
+    import { ExampleType } from '@/types/example.type';
 
-const exampleValue: ExampleType = {
-  exampleProperty: 'Hello, world!',
-};
+    const exampleValue: ExampleType = {
+      exampleProperty: 'Hello, world!',
+    };
 
-provide(ExampleKey, exampleValue);
-```
+    provide(ExampleKey, exampleValue);
+    ```
 
-**5. Handle Injection Safely**
-Use a fallback value or optional chaining.
+5. **Handle Injection Safely**
+    Use a fallback value or optional chaining.
 
-**With a default value:**
-```typescript
-const defaultExampleValue: ExampleType = { exampleProperty: 'Default' };
-const injectedValue = inject(ExampleKey, defaultExampleValue);
-```
+    **With a default value:**
+    ```typescript
+    const defaultExampleValue: ExampleType = { exampleProperty: 'Default' };
+    const injectedValue = inject(ExampleKey, defaultExampleValue);
+    ```
 
-**With optional chaining:**
-```typescript
-const injectedValue = inject<ExampleType>(ExampleKey);
-console.log(injectedValue?.exampleProperty);
-```
+    **With optional chaining:**
+    ```typescript
+    const injectedValue = inject<ExampleType>(ExampleKey);
+    console.log(injectedValue?.exampleProperty);
+    ```
 
-**6. Document Injection Keys**
-Add clear documentation for each key.
+6. **Document Injection Keys**
+    Add clear documentation for each key.
 
-```typescript
-/**
- * **ExampleKey**
- * Used to inject shared example state.
- * - Provided By: `ExampleProvider`
- * - Injected In: Components needing example data
- */
-export const ExampleKey: InjectionKey<ExampleType> = Symbol();
-```
+    ```typescript
+    /**
+     * **ExampleKey**
+     * Used to inject shared example state.
+     * - Provided By: `ExampleProvider`
+     * - Injected In: Components needing example data
+     */
+    export const ExampleKey: InjectionKey<ExampleType> = Symbol();
+    ```
 
-***
 
-### Example Usage
+#### Example Usage
 
 **Centralized Key File:**
 ```typescript
@@ -629,32 +618,31 @@ const exampleValue = inject(ExampleKey);
   <p>{{ exampleValue?.exampleProperty }}</p>
 </template>
 ```
-***
 
-## 6. Environment Variables
+## 3. Configuration & Environment
+
+### 3.1 Environment Variables
 
 Keep your configuration secure and organized with proper environment variable naming.
 
-### Naming Rules
+#### Naming Rules
 
-**Use proper prefixes:**
+**Use the VITE_ prefix:**
 
-* `VUE_APP_` for production builds
-* `VITE_APP_` for development
+* `VITE_` for all environments (development and production)
 
 **Make names descriptive:**
 
 ```bash
 # ❌ Vague and confusing
-VUE_APP_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com
+VITE_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com
 
 # ✅ Clear and descriptive
-VUE_APP_SETTINGS_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com
+VITE_SETTINGS_MEMBER_ADMIN_API=https://dev-api-settings-member-admin.example.com
 ```
 
-**Stay consistent:** If you define a variable with one prefix, define it with both prefixes for consistency across environments.
+**Stay consistent:** Use the VITE_ prefix for all environment variables across environments.
 
-***
 
 ## Wrapping Up
 
