@@ -1,5 +1,6 @@
 ---
 noIndex: true
+icon: clone
 ---
 
 # Cloning Repositories
