@@ -11,10 +11,11 @@ Here’s an overview of the project structure:
   > assets
   > components
     > commons
-    > moduleName
-      > helpers
-      > options
-      ModuleNameComponentExample.vue
+    > modules
+      > ExampleModule
+        > helpers
+        > options
+        ExampleModuleComponent.vue
   > layout
     ExampleLayout.vue
   > router
@@ -45,11 +46,13 @@ We store our assets like images and styles files here.
 
 Components stored in the commons directory are designed for widespread usage throughout the project. These are reusable components utilized in multiple locations.
 
-### 3. `components > moduleName`
+### 3. `components > modules > ExampleModule`
 
 This folder is designated for organizing components based on specific pages, menus, or functions. Components within this directory are grouped according to their association with particular pages, menus, or functionalities. This structuring approach makes it easier to locate and manage components within the context of their usage.
 
-### 4. `components > moduleName > helpers`
+Here `ExampleModule` is the name of the module and it can have another sub module with the same structure.
+
+### 4. `components > modules > ExampleModule > helpers`
 
 This folder contains function used by the components inside the module.
 
@@ -67,9 +70,9 @@ Below is the guidelines:
    Example: `export camelCase from 'camelCase.helper';`
 8. Import form helper on your component: `import { helperFunction } from './helpers'`
 
-### 5. `components > moduleName > options`
+### 5. `components > modules > ExampleModule > options`
 
-Within the `moduleName` directory, the `options` folder stores TypeScript files essential for the components. These files contain configurations and options necessary for the proper functioning of the associated components. We mainly store the filter options.
+Within the `modules` directory, the `options` folder stores TypeScript files essential for the components. These files contain configurations and options necessary for the proper functioning of the associated components. We mainly store the filter options.
 
 ### 6. `router/index.ts`
 
