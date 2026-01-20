@@ -11,10 +11,10 @@ Here’s an overview of the project structure:
   > assets
   > components
     > commons
-    > modules
+    > moduleName
       > helpers
       > options
-      ModuleComponentExample.vue
+      ModuleNameComponentExample.vue
   > layout
     ExampleLayout.vue
   > router
@@ -45,11 +45,11 @@ We store our assets like images and styles files here.
 
 Components stored in the commons directory are designed for widespread usage throughout the project. These are reusable components utilized in multiple locations.
 
-### 3. `components > module`
+### 3. `components > moduleName`
 
 This folder is designated for organizing components based on specific pages, menus, or functions. Components within this directory are grouped according to their association with particular pages, menus, or functionalities. This structuring approach makes it easier to locate and manage components within the context of their usage.
 
-### 4. `components > module > helpers`
+### 4. `components > moduleName > helpers`
 
 This folder contains function used by the components inside the module.
 
@@ -67,9 +67,9 @@ Below is the guidelines:
    Example: `export camelCase from 'camelCase.helper';`
 8. Import form helper on your component: `import { helperFunction } from './helpers'`
 
-### 5. `components > module > options`
+### 5. `components > moduleName > options`
 
-Within the `module` directory, the `options` folder stores TypeScript files essential for the components. These files contain configurations and options necessary for the proper functioning of the associated components. We mainly store the filter options.
+Within the `moduleName` directory, the `options` folder stores TypeScript files essential for the components. These files contain configurations and options necessary for the proper functioning of the associated components. We mainly store the filter options.
 
 ### 6. `router/index.ts`
 
