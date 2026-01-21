@@ -116,7 +116,7 @@ The `views` folder contains Vue components that serve as **route targets**. Thes
 
 ### 8. `router/index.ts`
 
-The `router` folder stores the client-side routes (URLs) used by the application. It also details the components used by each route. The guidelines for this folder can you read in [Vue Router Setup](./code-consistency-guidelines/vue-specific-guidelines.md#vue-router-setup).
+The `router` folder stores the client-side routes (URLs) used by the application. It also details the components used by each route. The guidelines for this folder can you read in [Vue Router Setup](code-consistency-guidelines/vue-specific-guidelines.md#vue-router-setup).
 
 ### 9. `utils`
 
