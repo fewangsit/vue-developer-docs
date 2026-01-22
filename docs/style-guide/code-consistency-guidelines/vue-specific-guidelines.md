@@ -39,6 +39,56 @@ const formatFullName = (name: string): string => {
 };
 ```
 
+#### 1.2 Boolean Props Shorthand
+
+For boolean props with `true` values, use the shorthand form without explicitly setting the value.
+
+**Don't:**
+
+```html
+<DataTable
+  :use-paginator="true"
+  :loading="true"
+  :sortable="true"
+/>
+
+<Button
+  :disabled="true"
+  :outlined="true"
+/>
+```
+
+**Do:**
+
+```html
+<DataTable
+  use-paginator
+  loading
+  sortable
+/>
+
+<Button
+  outlined
+/>
+```
+
+**When to use explicit values:**
+
+Only use explicit boolean values when the value is dynamic or `false`:
+
+```html
+<!-- Dynamic boolean -->
+<DataTable :use-paginator="shouldShowPaginator" />
+
+<!-- Explicit false -->
+<DataTable :use-paginator="false" />
+
+<!-- Computed boolean -->
+<Button :disabled="isFormInvalid" />
+```
+
+**Rule:** If the boolean prop is always `true`, use shorthand. If it's dynamic or `false`, use explicit binding.
+
 ## 2. Script Setup & TypeScript
 
 ### 2.1 Defining Props
