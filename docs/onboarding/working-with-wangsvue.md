@@ -4,34 +4,38 @@ icon: vuejs
 
 # Working with WangsVue
 
-WangsVue is our Design System Component Library for Vue.js. It is built with Vue.js 3 and Tailwind CSS.
+WangsVue is our Design System Component Library for Vue.js 3, powered by Tailwind CSS. To get the most out of WangsVue when developing with AI, we use the **Model Context Protocol (MCP)**.
 
-In this article, we will guide you to setup and use WangsVue MCP with AI Agents. We will focusing on GitHub Copilot. Other IDEs may have different configuration methods. Please refer to their documentation for more details.
+This guide will walk you through setting up the WangsVue MCP server to provide AI agents (specifically **GitHub Copilot**) with full context about our components, APIs, and design patterns.
 
-## Prepare WangsVue MCP
+---
 
-WangsVue includes an MCP server that enables AI models to access comprehensive context about the library’s components and their usage.
+## Step 1: Initialize AI Rules
 
-Every WangsVue package includes the MCP server, which you can start using the `wangsvue-mcp` CLI tool.
+The first step is to provide your editor with the "Master Operating Directive" for WangsVue. This helps the AI understand our coding standards and library structure.
 
-### CLI Commands
+Run the following command in your terminal:
 
-The `wangsvue-mcp` CLI tool provides additional utility commands:
+```bash
+npx wangsvue-mcp init-rules copilot
+```
 
-- `run`: Starts the MCP server (STDIO).
-- `init-rules <editor>`: Initializes documentation and rules for a specific AI editor.
-  - Supported editors: `kiro`, `windsurf`, `trae`, `copilot`.
-  - Options:
-    - `--api-services`: Only initialize rules for API documentation.
-    - `--split`: Split content into separate MD files. By default, it merged with a single `Master Operating Directive.md`.
+**What this does:**
 
-Run `npx wangsvue-mcp init-rules copilot` to initialize the rules for Copilot. It will create a `copilot.instruction.md` file within folder `.github/instructions`.
+- Creates a `.github/instructions/Master Operating Directive.instruction.md` file.
+- This file contains the essential context GitHub Copilot needs to write high-quality WangsVue code.
 
-### MCP Server Configuration
+> [!TIP]
+> Other supported editors include `kiro`, `windsurf`, and `trae`. Simply replace `copilot` with your editor's name in the command.
 
-To use the MCP server with your AI editor, you need to configure it in your editor settings.
+---
 
-Bellow is an example configuration for Visual Studio Code in `.vscode/mcp.json`:
+## Step 2: Configure MCP Servers
+
+To enable real-time documentation and utility access, you need to configure the MCP servers in VS Code.
+
+1. Create or open `.vscode/mcp.json` in your project root.
+2. Add the following configuration:
 
 ```json
 {
@@ -47,43 +51,52 @@ Bellow is an example configuration for Visual Studio Code in `.vscode/mcp.json`:
     "figma-dev": {
       "url": "http://127.0.0.1:3845/mcp"
     }
-  },
-  "inputs": []
+  }
 }
 ```
 
-Other editors may have different configuration methods. Please refer to their documentation for more details.
+---
 
-For `figma-dev` mcp, you need to opens Figma Desktop and enable the MCP server:
+## Step 3: Enable Figma Integration (Optional)
+
+If you want the AI to have access to your Figma designs, you need to enable the Figma MCP server locally.
+
+1. Open **Figma Desktop**.
+2. Enable the MCP server within Figma (see video below).
+3. Ensure the server is running on `http://127.0.0.1:3845`.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Cq-7lFMNESk?si=RRaA5olZril7gzzy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-Then you need to starts the MCP server manually, since as this article written, the MCP server is not started automatically and the settings for automatic start is still experimental feature and currently not working properly.
+---
 
-To start the MCP server, opens `.vscode/mcp.json` and click the `start` button appears on each server.
+## Step 4: Start and Verify the Servers
+
+In the current version of the VS Code MCP extension, servers may need to be started manually.
+
+1. Open `.vscode/mcp.json` in VS Code.
+2. Look for the **"start"** button that appears above or next to each server definition.
+3. Click **start** for all configured servers.
 
 ![Manually Start MCP Server](../.gitbook/assets/mcp-server-start-manually.png)
 
-## Using the MCP Server with AI Editors
+### Verify Connection
 
-Once you have configured the MCP server in your editor, you can start using it with AI models. The server will provide the necessary context to generate accurate and helpful code suggestions.
-
-### Verify MCP Server is Running
-
-In VS Code, opens `.vscode/mcp.json`. You will see the MCP Server status and the tools count available.
+Once started, you should see a 'Running' status and a count of available tools. This confirms that the AI now has access to the WangsVue ecosystem.
 
 ![MCP Server Running](../.gitbook/assets/mcp-server-running.png)
 
-Now these mcp tools are available for AI Agent within GitHub Copilot Extension.
+---
 
-### Configure Tools in Copilot Chat extension
+## Step 5: Enable Tools in GitHub Copilot
 
-Opens Copilot Chat extension panel, change mode to Agent mode. Then click the `Configure Tools` button.
+Finally, you must tell GitHub Copilot to use these tools during your chat sessions.
 
-![Configure Tools](../.gitbook/assets/copilot-chat-configure-tools-button.png)
+1. Open the **Copilot Chat** panel.
+2. Switch the mode to **Agent** mode.
+3. Click the **Configure Tools** button.
+   ![Configure Tools Button](../.gitbook/assets/copilot-chat-configure-tools-button.png)
+4. Enable the tools provided by `wangsvue-mcp` and `wangsvue-docs` as shown below:
+   ![Configured Tools Selection](../.gitbook/assets/copilot-chat-configured-tools.png)
+5. Click **OK**.
 
-Then configure to match bellow image:
-
-![Configure Tools](../.gitbook/assets/copilot-chat-configured-tools.png)
-
-Click OK.
+You're all set! You can now ask Copilot to "Create a WangsVue table with these specs..." and it will use the MCP tools to fetch the latest documentation and examples.
