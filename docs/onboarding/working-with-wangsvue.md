@@ -6,18 +6,67 @@ icon: vuejs
 
 WangsVue is our Design System Component Library for Vue.js 3, powered by Tailwind CSS. To get the most out of WangsVue when developing with AI, we use the **Model Context Protocol (MCP)**.
 
-This guide will walk you through setting up the WangsVue MCP server to provide AI agents (specifically **GitHub Copilot**) with full context about our components, APIs, and design patterns.
+This guide will walk you through setting up the WangsVue MCP server. We primarily recommend **Trae IDE** for the best integrated experience, but **GitHub Copilot** is also fully supported as an alternative.
 
 ---
 
-## Step 1: Initialize AI Rules
+## Preferred: Setup in Trae
 
-The first step is to provide your editor with the "Master Operating Directive" for WangsVue. This helps the AI understand our coding standards and library structure.
+Trae provides a seamless integration with MCP servers and is the recommended editor for WangsVue development.
 
-Run the following command in your terminal:
+### Step 1: Configure MCP
+
+1. Press `Cmd + Shift + P` (or `Ctrl + Shift + P` on Windows) to open the Command Palette.
+2. Search for `Preference: Open MCP Config (JSON)`.
+3. Paste the following configuration into the file:
+
+```json
+{
+  "mcpServers": {
+    "wangsvue-mcp": {
+      "command": "npx",
+      "args": ["--prefix", "${workspaceFolder}", "wangsvue-mcp", "run"]
+    },
+    "wangsvue-docs": {
+      "url": "https://wangsvue.netlify.app/mcp"
+    },
+    "figma-dev": {
+      "url": "http://127.0.0.1:3845/mcp"
+    }
+  }
+}
+```
+
+### Step 2: Initialize AI Rules and Skills
+
+To give Trae the best context about WangsVue's coding standards, initialize the AI rules and skills by running the following command in your terminal:
 
 ```bash
-npx wangsvue-mcp init-rules copilot
+npx wangsvue-mcp init trae
+```
+
+This will generate the necessary rules and skills files that Trae uses to understand the codebase structure, component library, and coding conventions.
+
+### Step 3: Verify MCP Servers
+
+1. Open the **AI Sidebar** in Trae (shortcut: `Cmd + U` on macOS / `Ctrl + U` on Windows).
+2. Select the **Builder with MCP** agent.
+3. Verify the connection by checking the **Tools** icon in the chat interface. A green indicator confirms that `wangsvue-mcp`, `wangsvue-docs`, and `figma-dev` are running.
+   ![MCP Servers Running](../.gitbook/assets/trae-builder-with-mcp-tools-green-indicator.png)
+4. If a red indicator appears, reload the Trae window (`Developer: Reload Window`) to refresh the connection.
+
+---
+
+## Alternative: Setup in GitHub Copilot
+
+If you prefer using VS Code with GitHub Copilot, follow these steps to manually configure the environment.
+
+### Step 1: Initialize AI Rules and Skills
+
+Provide GitHub Copilot with the "Master Operating Directive" for WangsVue:
+
+```bash
+npx wangsvue-mcp init copilot
 ```
 
 **What this does:**
@@ -25,15 +74,9 @@ npx wangsvue-mcp init-rules copilot
 - Creates a `.github/instructions/Master Operating Directive.instruction.md` file.
 - This file contains the essential context GitHub Copilot needs to write high-quality WangsVue code.
 
-{% hint style="info" %}
-Other supported editors include `kiro`, `windsurf`, and `trae`. Simply replace `copilot` with your editor's name in the command.
-{% endhint %}
+### Step 2: Configure MCP Servers
 
----
-
-## Step 2: Configure MCP Servers
-
-To enable real-time documentation and utility access, you need to configure the MCP servers in VS Code.
+To enable real-time documentation and utility access:
 
 1. Create or open `.vscode/mcp.json` in your project root.
 2. Add the following configuration:
@@ -56,11 +99,32 @@ To enable real-time documentation and utility access, you need to configure the 
 }
 ```
 
+### Step 3: Start and Verify Servers
+
+In VS Code, you may need to start the servers manually:
+
+1. Open `.vscode/mcp.json`.
+2. Look for the **"start"** button that appears above or next to each server definition.
+3. Click **start** for all configured servers.
+   ![Manually Start MCP Server](../.gitbook/assets/mcp-server-start-manually.png)
+4. Verify they show a 'Running' status.
+   ![MCP Server Running](../.gitbook/assets/mcp-server-running.png)
+
+### Step 4: Enable Tools in Copilot
+
+1. Open the **Copilot Chat** panel.
+2. Switch to **Agent** mode.
+3. Click the **Configure Tools** button.
+   ![Configure Tools Button](../.gitbook/assets/copilot-chat-configure-tools-button.png)
+4. Enable the tools provided by `wangsvue-mcp` and `wangsvue-docs`.
+   ![Configured Tools Selection](../.gitbook/assets/copilot-chat-configured-tools.png)
+5. Click **OK**.
+
 ---
 
-## Step 3: Enable Figma Integration (Optional)
+## Shared: Enable Figma Integration (Optional)
 
-If you want the AI to have access to your Figma designs, you need to enable the Figma MCP server locally.
+For both Trae and Copilot, if you want the AI to have access to your Figma designs, you need to enable the Figma MCP server locally.
 
 1. Open **Figma Desktop**.
 2. Enable the MCP server within Figma (see video below).
@@ -70,37 +134,6 @@ If you want the AI to have access to your Figma designs, you need to enable the 
 
 ---
 
-## Step 4: Start and Verify the Servers
-
-In the current version of the VS Code MCP extension, servers may need to be started manually.
-
-1. Open `.vscode/mcp.json` in VS Code.
-2. Look for the **"start"** button that appears above or next to each server definition.
-3. Click **start** for all configured servers.
-
-![Manually Start MCP Server](../.gitbook/assets/mcp-server-start-manually.png)
-
-### Verify Connection
-
-Once started, you should see a 'Running' status and a count of available tools. This confirms that the AI now has access to the WangsVue ecosystem.
-
-![MCP Server Running](../.gitbook/assets/mcp-server-running.png)
-
----
-
-## Step 5: Enable Tools in GitHub Copilot
-
-Finally, you must tell GitHub Copilot to use these tools during your chat sessions.
-
-1. Open the **Copilot Chat** panel.
-2. Switch the mode to **Agent** mode.
-3. Click the **Configure Tools** button.\
-   ![Configure Tools Button](../.gitbook/assets/copilot-chat-configure-tools-button.png)
-4. Enable the tools provided by `wangsvue-mcp` and `wangsvue-docs` as shown below: ![Configured Tools Selection](../.gitbook/assets/copilot-chat-configured-tools.png)
-5. Click **OK**.
-
-You're all set! You can now ask Copilot to "Create a WangsVue table with these specs..." and it will use the MCP tools to fetch the latest documentation and examples.
-
 ## Prompting Techniques
 
 To get high-quality code from AI models using WangsVue MCP, follow these prompting best practices:
@@ -108,7 +141,7 @@ To get high-quality code from AI models using WangsVue MCP, follow these prompti
 - **Use English (Optional)**: For the most accurate logic and component selection, English is the preferred language for prompts.
 - **Provide Figma Context**: Always include Figma design links and explicitly mention the WangsVue components you see in the design (e.g., "Use `DataTable`, `Card`, and `ButtonFilter`").
 - **Be Explicit**: State technical requirements clearly, such as "paginated", "server-side sorting".
-- **Use Agent Mode**: For multi-file scaffolding or complex logic, ensure you are in **Agent mode** so the AI can use the full suite of MCP tools.
+- **Use Agent Mode**: For multi-file scaffolding or complex logic, ensure you are in **Agent mode** (or Trae's equivalent) so the AI can use the full suite of MCP tools.
 
 ### The "Perfect" Prompt Template
 
@@ -116,7 +149,7 @@ A well-structured prompt significantly improves the accuracy of the generated UI
 
 ```text
 [Task]
-By following #file:Master Operating Directive.instructions.md
+By following #file:Master Operating Directive.instructions.md (or relevant context file)
 
 Scaffold the Layout, View, and Module components for the "File Manager" module.
 
