@@ -8,7 +8,7 @@ WangsVue is our Design System Component Library for Vue.js 3, powered by Tailwin
 
 This guide will walk you through setting up the WangsVue MCP server to provide AI agents (specifically **GitHub Copilot**) with full context about our components, APIs, and design patterns.
 
----
+***
 
 ## Step 1: Initialize AI Rules
 
@@ -22,13 +22,14 @@ npx wangsvue-mcp init-rules copilot
 
 **What this does:**
 
-- Creates a `.github/instructions/Master Operating Directive.instruction.md` file.
-- This file contains the essential context GitHub Copilot needs to write high-quality WangsVue code.
+* Creates a `.github/instructions/Master Operating Directive.instruction.md` file.
+* This file contains the essential context GitHub Copilot needs to write high-quality WangsVue code.
 
-> [!TIP]
-> Other supported editors include `kiro`, `windsurf`, and `trae`. Simply replace `copilot` with your editor's name in the command.
+{% hint style="info" %}
+Other supported editors include `kiro`, `windsurf`, and `trae`. Simply replace `copilot` with your editor's name in the command.
+{% endhint %}
 
----
+***
 
 ## Step 2: Configure MCP Servers
 
@@ -55,7 +56,7 @@ To enable real-time documentation and utility access, you need to configure the 
 }
 ```
 
----
+***
 
 ## Step 3: Enable Figma Integration (Optional)
 
@@ -65,9 +66,9 @@ If you want the AI to have access to your Figma designs, you need to enable the 
 2. Enable the MCP server within Figma (see video below).
 3. Ensure the server is running on `http://127.0.0.1:3845`.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Cq-7lFMNESk?si=RRaA5olZril7gzzy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{% embed url="https://www.youtube.com/embed/Cq-7lFMNESk?si=RRaA5olZril7gzzy" %}
 
----
+***
 
 ## Step 4: Start and Verify the Servers
 
@@ -85,7 +86,7 @@ Once started, you should see a 'Running' status and a count of available tools. 
 
 ![MCP Server Running](../.gitbook/assets/mcp-server-running.png)
 
----
+***
 
 ## Step 5: Enable Tools in GitHub Copilot
 
@@ -93,10 +94,9 @@ Finally, you must tell GitHub Copilot to use these tools during your chat sessio
 
 1. Open the **Copilot Chat** panel.
 2. Switch the mode to **Agent** mode.
-3. Click the **Configure Tools** button.
+3. Click the **Configure Tools** button.\
    ![Configure Tools Button](../.gitbook/assets/copilot-chat-configure-tools-button.png)
-4. Enable the tools provided by `wangsvue-mcp` and `wangsvue-docs` as shown below:
-   ![Configured Tools Selection](../.gitbook/assets/copilot-chat-configured-tools.png)
+4. Enable the tools provided by `wangsvue-mcp` and `wangsvue-docs` as shown below: ![Configured Tools Selection](../.gitbook/assets/copilot-chat-configured-tools.png)
 5. Click **OK**.
 
 You're all set! You can now ask Copilot to "Create a WangsVue table with these specs..." and it will use the MCP tools to fetch the latest documentation and examples.
