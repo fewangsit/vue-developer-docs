@@ -8,7 +8,7 @@ WangsVue is our Design System Component Library for Vue.js 3, powered by Tailwin
 
 This guide will walk you through setting up the WangsVue MCP server to provide AI agents (specifically **GitHub Copilot**) with full context about our components, APIs, and design patterns.
 
-***
+---
 
 ## Step 1: Initialize AI Rules
 
@@ -22,14 +22,14 @@ npx wangsvue-mcp init-rules copilot
 
 **What this does:**
 
-* Creates a `.github/instructions/Master Operating Directive.instruction.md` file.
-* This file contains the essential context GitHub Copilot needs to write high-quality WangsVue code.
+- Creates a `.github/instructions/Master Operating Directive.instruction.md` file.
+- This file contains the essential context GitHub Copilot needs to write high-quality WangsVue code.
 
 {% hint style="info" %}
 Other supported editors include `kiro`, `windsurf`, and `trae`. Simply replace `copilot` with your editor's name in the command.
 {% endhint %}
 
-***
+---
 
 ## Step 2: Configure MCP Servers
 
@@ -56,7 +56,7 @@ To enable real-time documentation and utility access, you need to configure the 
 }
 ```
 
-***
+---
 
 ## Step 3: Enable Figma Integration (Optional)
 
@@ -68,7 +68,7 @@ If you want the AI to have access to your Figma designs, you need to enable the 
 
 {% embed url="https://www.youtube.com/embed/Cq-7lFMNESk?si=RRaA5olZril7gzzy" %}
 
-***
+---
 
 ## Step 4: Start and Verify the Servers
 
@@ -86,7 +86,7 @@ Once started, you should see a 'Running' status and a count of available tools. 
 
 ![MCP Server Running](../.gitbook/assets/mcp-server-running.png)
 
-***
+---
 
 ## Step 5: Enable Tools in GitHub Copilot
 
@@ -100,3 +100,40 @@ Finally, you must tell GitHub Copilot to use these tools during your chat sessio
 5. Click **OK**.
 
 You're all set! You can now ask Copilot to "Create a WangsVue table with these specs..." and it will use the MCP tools to fetch the latest documentation and examples.
+
+## Prompting Techniques
+
+To get high-quality code from AI models using WangsVue MCP, follow these prompting best practices:
+
+- **Use English (Optional)**: For the most accurate logic and component selection, English is the preferred language for prompts.
+- **Provide Figma Context**: Always include Figma design links and explicitly mention the WangsVue components you see in the design (e.g., "Use `DataTable`, `Card`, and `ButtonFilter`").
+- **Be Explicit**: State technical requirements clearly, such as "paginated", "server-side sorting".
+- **Use Agent Mode**: For multi-file scaffolding or complex logic, ensure you are in **Agent mode** so the AI can use the full suite of MCP tools.
+
+### The "Perfect" Prompt Template
+
+A well-structured prompt significantly improves the accuracy of the generated UI. Here is an example of an effective prompting structure:
+
+```text
+[Task]
+By following #file:Master Operating Directive.instructions.md
+
+Scaffold the Layout, View, and Module components for the "File Manager" module.
+
+[Design Links]
+- Main Layout: @https://www.figma.com/design/yRqJnIPhkduhdUTVP0kziU/Global-Settings?node-id=2907-46597&m=dev
+- Main view: @https://www.figma.com/design/yRqJnIPhkduhdUTVP0kziU/Global-Settings?node-id=2907-46605&m=dev
+- Table Actions: @https://www.figma.com/design/yRqJnIPhkduhdUTVP0kziU/Global-Settings?node-id=2944-90392&m=dev
+- Filter Panel: @https://www.figma.com/design/yRqJnIPhkduhdUTVP0kziU/Global-Settings?node-id=2944-90213&m=dev
+
+[Components to Use]
+- Card, BreadCrumb, FilterContainer, DialogConfirm
+- DataTable (with pagination, single action and checkbox selection)
+- ButtonSearch, ButtonFilter, ButtonBulkAction, and Button for Outlined style
+
+[Implementation Details]
+- If a column displays a date, apply 'dateFormatOptions' in TableColumn.
+- If a header has a sort icon, set 'sortable: true' in TableColumn.
+- Handle the 'Delete' action with a confirm dialog (Design: @https://www.figma.com/design/yRqJnIPhkduhdUTVP0kziU/Global-Settings?node-id=2944-90404&m=dev).
+- Display a success Toast notification after bulk actions.
+```
