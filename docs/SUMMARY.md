@@ -6,6 +6,7 @@
 
 * [Prerequisites](onboarding/prerequisites.md)
 * [Cloning Repositories](onboarding/cloning-repositories.md)
+* [Working with WangsVue](onboarding/working-with-wangsvue.md)
 
 ## Basics
 
