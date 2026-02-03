@@ -8,7 +8,7 @@ WangsVue is our Design System Component Library for Vue.js 3, powered by Tailwin
 
 This guide will walk you through setting up the WangsVue MCP server. We primarily recommend **Trae IDE** for the best integrated experience, but **GitHub Copilot** is also fully supported as an alternative.
 
----
+***
 
 ## Preferred: Setup in Trae
 
@@ -51,11 +51,10 @@ This will generate the necessary rules and skills files that Trae uses to unders
 
 1. Open the **AI Sidebar** in Trae (shortcut: `Cmd + U` on macOS / `Ctrl + U` on Windows).
 2. Select the **Builder with MCP** agent.
-3. Verify the connection by checking the **Tools** icon in the chat interface. A green indicator confirms that `wangsvue-mcp`, `wangsvue-docs`, and `figma-dev` are running.
-   ![MCP Servers Running](../.gitbook/assets/trae-builder-with-mcp-tools-green-indicator.png)
+3. Verify the connection by checking the **Tools** icon in the chat interface. A green indicator confirms that `wangsvue-mcp`, `wangsvue-docs`, and `figma-dev` are running. ![MCP Servers Running](../.gitbook/assets/trae-builder-with-mcp-tools-green-indicator.png)
 4. If a red indicator appears, reload the Trae window (`Developer: Reload Window`) to refresh the connection.
 
----
+***
 
 ## Alternative: Setup in GitHub Copilot
 
@@ -71,8 +70,8 @@ npx wangsvue-mcp init copilot
 
 **What this does:**
 
-- Creates a `.github/instructions/Master Operating Directive.instruction.md` file.
-- This file contains the essential context GitHub Copilot needs to write high-quality WangsVue code.
+* Creates a `.github/instructions/Master Operating Directive.instruction.md` file.
+* This file contains the essential context GitHub Copilot needs to write high-quality WangsVue code.
 
 ### Step 2: Configure MCP Servers
 
@@ -105,22 +104,21 @@ In VS Code, you may need to start the servers manually:
 
 1. Open `.vscode/mcp.json`.
 2. Look for the **"start"** button that appears above or next to each server definition.
-3. Click **start** for all configured servers.
+3. Click **start** for all configured servers.\
    ![Manually Start MCP Server](../.gitbook/assets/mcp-server-start-manually.png)
-4. Verify they show a 'Running' status.
+4. Verify they show a 'Running' status.\
    ![MCP Server Running](../.gitbook/assets/mcp-server-running.png)
 
 ### Step 4: Enable Tools in Copilot
 
 1. Open the **Copilot Chat** panel.
 2. Switch to **Agent** mode.
-3. Click the **Configure Tools** button.
+3. Click the **Configure Tools** button. \
    ![Configure Tools Button](../.gitbook/assets/copilot-chat-configure-tools-button.png)
-4. Enable the tools provided by `wangsvue-mcp` and `wangsvue-docs`.
-   ![Configured Tools Selection](../.gitbook/assets/copilot-chat-configured-tools.png)
+4. Enable the tools provided by `wangsvue-mcp` and `wangsvue-docs`. ![Configured Tools Selection](../.gitbook/assets/copilot-chat-configured-tools.png)
 5. Click **OK**.
 
----
+***
 
 ## Shared: Enable Figma Integration (Optional)
 
@@ -132,22 +130,22 @@ For both Trae and Copilot, if you want the AI to have access to your Figma desig
 
 {% embed url="https://www.youtube.com/embed/Cq-7lFMNESk?si=RRaA5olZril7gzzy" %}
 
----
+***
 
 ## Prompting Techniques
 
 To get high-quality code from AI models using WangsVue MCP, follow these prompting best practices:
 
-- **Use English (Optional)**: For the most accurate logic and component selection, English is the preferred language for prompts.
-- **Provide Figma Context**: Always include Figma design links and explicitly mention the WangsVue components you see in the design (e.g., "Use `DataTable`, `Card`, and `ButtonFilter`").
-- **Be Explicit**: State technical requirements clearly, such as "paginated", "server-side sorting".
-- **Use Agent Mode**: For multi-file scaffolding or complex logic, ensure you are in **Agent mode** (or Trae's equivalent) so the AI can use the full suite of MCP tools.
+* **Use English (Optional)**: For the most accurate logic and component selection, English is the preferred language for prompts.
+* **Provide Figma Context**: Always include Figma design links and explicitly mention the WangsVue components you see in the design (e.g., "Use `DataTable`, `Card`, and `ButtonFilter`").
+* **Be Explicit**: State technical requirements clearly, such as "paginated", "server-side sorting".
+* **Use Agent Mode**: For multi-file scaffolding or complex logic, ensure you are in **Agent mode** (or Trae's equivalent) so the AI can use the full suite of MCP tools.
 
 ### The "Perfect" Prompt Template
 
 A well-structured prompt significantly improves the accuracy of the generated UI. Here is an example of an effective prompting structure:
 
-```text
+```
 [Task]
 By following #file:Master Operating Directive.instructions.md (or relevant context file)
 
