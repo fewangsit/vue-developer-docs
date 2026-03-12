@@ -1,16 +1,20 @@
+---
+icon: screwdriver-wrench
+---
+
 # WebDriver IO Selector Guide
 
 Halaman ini mendokumentasikan pola-pola ter-standard untuk mencari selector automation di WebDriverIO untuk project WangsVue.
 
 
 
-### Mencari Button dengan textnya
+### Mencari Button dengan text
 
 ```typescript
 const button = $("aria/Save Changes")
 ```
 
-### Mencari Link dengan Anchornya
+### Mencari Link dengan Anchor
 
 ```typescript
 const resetLink = $("aria/Reset here")
@@ -76,37 +80,39 @@ Contoh misal mau pilih position "QA Engineer" di Dropdown:
 
 ```javascript
 class CreateUserForm {
-    // Getter untuk container utama dialognya
     get container() { return $('aria/Create User'); }
 
-    // Selector input di DALAM container
-    get positionDropdown() { 
-        return this.container.$('aria/Position'); 
-    }
-    
-    dropdownPanel(label) {
-        //Dropdown panel tidak di render di dalam dialog, jadi gabisa relative ke container
-        return $(`aria/${label} Panel`) // Panel dropdown akan otomatis punya accessibility berdasarkan labelnya
-    }
+    // Helper generic untuk ambil field berdasarkan label (biar gak buat getter satu-sama)
+    field(label) { return this.container.$(`aria/${label}`); }
 
-    // Selector button di DALAM footer
-    get saveBtn() { 
-        return this.footer.$('aria/Submit'); 
+    // Panel dropdown (portal)
+    dropdownPanel(label) { return $(`aria/${label} Panel`); }
+
+    get saveBtn() { return this.container.$('aria/Submit'); }
+
+    /**
+     * Helper untuk pilih option di dropdown
+     * Bisa dipakai buat single select dropdown maupun multi select
+     */
+    async selectOption(label, optionName) {
+        await this.field(label).click();
+        const panel = await this.dropdownPanel(label);
+        await panel.waitForDisplayed();
+        
+        // Gunakan backtick `` untuk template literal, bukan single quote ''
+        await panel.$(`aria/${optionName}`).click();
+
+        await this.field(label).click(); // Tutup panel
     }
 
     async fillForm(data) {
-        // 1. Klik dropdown untuk buka panel
-        await this.positionDropdown.click();
+        // Pilih Position
+        await this.selectOption('Position', data.position);
 
-        // 2. Ambil panelnya secara dinamis berdasarkan label 'Position'
-        const panel = await this.dropdownPanel('Position');
-        
-        // 3. Pastikan panel muncul dulu sebelum klik isinya
-        await panel.waitForDisplayed();
-
-        // 4. Cari option di dalam panel tersebut
-        // Gunakan selector teks atau aria jika option punya label
-        await panel.$(`aria/${data.position}`).click(); 
+        // Pilih Hobi (Jika data.hobies itu Array, kita loop)
+        for (const hobi of data.hobies) {
+            await this.selectOption('Hobies', hobi);
+        }
 
         await this.saveBtn.click();
     }
