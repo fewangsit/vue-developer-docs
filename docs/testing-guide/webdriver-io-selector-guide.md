@@ -37,11 +37,19 @@ Berlaku untuk input:
 3. Textarea
 4. Currency
 5. Input file
-6. OTP (Tanpa label, default aria labelnya "OTP Digit 1", "OTP Digit 2", dst)
+6. Calendar (Single atau Range)
+7. OTP (Tanpa label, default aria labelnya "OTP Digit 1", "OTP Digit 2", dst)
 
 Semua input di atas bisa langsung aksi `.setValue()`
 
 Untuk OTP cukup set value ke first digit input.
+
+Untuk Calendar penanganannya sedikit beda, harus pakai ISO format untuk tanggal: `YYYY-MM-DDTHH:mm:ss`
+
+```typescript
+$('aria/Audit Schedule').setValue("2026-03-12T14:30:00")
+$('aria/Last Update').setValue("2026-03-12T00:00:00 - 2026-03-15T23:59:59") // Dipisah " - "
+```
 
 <pre class="language-typescript"><code class="lang-typescript"><strong>class ExamplePageObjectModel {
 </strong>    // Cari input dari Label
@@ -50,7 +58,8 @@ Untuk OTP cukup set value ke first digit input.
     get loginButton() { return $('aria/Login'); }
     get inputFile() { return $('aria/Upload File'); } 
     get assetValueInput() { return $('aria/Asset Value'); }
-    get inputOtp() { return $('aria/OTP Digit 1); }
+    get inputOtp() { return $('aria/OTP Digit 1'); }
+    get activePeriodInput() { return $('aria/Active Period Until'); }
 
     /**
      * AMBIL ERROR MESSAGE PAKE ID DARI aria-describedby
@@ -70,7 +79,12 @@ Untuk OTP cukup set value ke first digit input.
 }
 
 export default new ExamplePageObjectModel();
+
 </code></pre>
+
+
+
+
 
 ### Memilih Opsi di Dropdown dan Multi Select
 
