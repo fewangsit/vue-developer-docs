@@ -78,8 +78,7 @@ Sebelum milih opsi, harus tau dulu opsi apa yang mau di select, dari Label nya.\
 \
 Contoh misal mau pilih position "QA Engineer" di Dropdown:
 
-```javascript
-class CreateUserForm {
+<pre class="language-javascript"><code class="lang-javascript">class CreateUserForm {
     get container() { return $('aria/Create User'); }
 
     // Helper generic untuk ambil field berdasarkan label (biar gak buat getter satu-sama)
@@ -99,9 +98,10 @@ class CreateUserForm {
         const panel = await this.dropdownPanel(label);
         await panel.waitForDisplayed();
         
+        // bakal cari option element dengan aria-label=QA Engineer
         // Gunakan backtick `` untuk template literal, bukan single quote ''
-        await panel.$(`aria/${optionName}`).click();
-
+<strong>        await panel.$(`aria/${optionName}`).click(); 
+</strong>
         await this.field(label).click(); // Tutup panel
     }
 
@@ -119,7 +119,7 @@ class CreateUserForm {
 }
 
 export default new CreateUserForm();
-```
+</code></pre>
 
 
 
@@ -158,4 +158,25 @@ export default new EditProfileDialog();
 ```
 
 
+
+### Scoping Aksi di Filter Panel / Filter Container
+
+<pre class="language-typescript"><code class="lang-typescript">class PageObject {
+    get buttonFilter() {
+<strong>        return $('aria/Toggle Filter Panel');
+</strong>    }
+
+    get container() {
+<strong>       return $('aria/Filter Panel');
+</strong>    }
+    
+    get applyButton() {
+       return this.container.$('aria/Apply')
+    } 
+    
+    get clearButton() {
+       return this.container.$('aria/Clear Field')
+    }     
+}
+</code></pre>
 
