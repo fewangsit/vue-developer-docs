@@ -65,8 +65,57 @@ Untuk OTP cukup set value ke first digit input.
     }
 }
 
-export default new LoginPage();
+export default new ExamplePageObjectModel();
 </code></pre>
+
+### Memilih Opsi di Dropdown dan Multi Select
+
+Sebelum milih opsi, harus tau dulu opsi apa yang mau di select, dari Label nya.\
+\
+Contoh misal mau pilih position "QA Engineer" di Dropdown:
+
+```javascript
+class CreateUserForm {
+    // Getter untuk container utama dialognya
+    get container() { return $('aria/Create User'); }
+
+    // Selector input di DALAM container
+    get positionDropdown() { 
+        return this.container.$('aria/Position'); 
+    }
+    
+    dropdownPanel(label) {
+        //Dropdown panel tidak di render di dalam dialog, jadi gabisa relative ke container
+        return $(`aria/${label} Panel`) // Panel dropdown akan otomatis punya accessibility berdasarkan labelnya
+    }
+
+    // Selector button di DALAM footer
+    get saveBtn() { 
+        return this.footer.$('aria/Submit'); 
+    }
+
+    async fillForm(data) {
+        // 1. Klik dropdown untuk buka panel
+        await this.positionDropdown.click();
+
+        // 2. Ambil panelnya secara dinamis berdasarkan label 'Position'
+        const panel = await this.dropdownPanel('Position');
+        
+        // 3. Pastikan panel muncul dulu sebelum klik isinya
+        await panel.waitForDisplayed();
+
+        // 4. Cari option di dalam panel tersebut
+        // Gunakan selector teks atau aria jika option punya label
+        await panel.$(`aria/${data.position}`).click(); 
+
+        await this.saveBtn.click();
+    }
+}
+
+export default new CreateUserForm();
+```
+
+
 
 ### Scoping Aksi di Dialog
 
