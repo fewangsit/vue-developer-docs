@@ -84,8 +84,6 @@ export default new ExamplePageObjectModel();
 
 
 
-
-
 ### Memilih Opsi di Dropdown dan Multi Select
 
 Sebelum milih opsi, harus tau dulu opsi apa yang mau di select, dari Label nya.\
@@ -134,6 +132,35 @@ Contoh misal mau pilih position "QA Engineer" di Dropdown:
 
 export default new CreateUserForm();
 </code></pre>
+
+
+
+### Input Phone Number
+
+Di input phone number ada dua input, Dropdown Dial Code, dan Phone number itu sendiri.<br>
+
+Di sini aria labelnya tidak mengikuti label.
+
+```typescript
+$('aria/Country Code').click() // Kalo perlu pilih country code, gunakan ini untuk membuka dropdown
+// Ikuti cara memilih opsi di dropdown di section sebelumnya
+
+$('aria/Phone Number').setValue('78677345634') // Bisa juga pake number
+```
+
+
+
+### Input Currency
+
+```typescript
+$('aria/Currency Code').click() // Kalo perlu pilih country code, gunakan ini untuk membuka dropdown
+// Ikuti cara memilih opsi di dropdown di section sebelumnya
+
+// Untuk pilih currency code, pake aria label
+$('aria/؋ - Afghan Afghani')
+
+$('aria/Currency Value').setValue(100000) // Bisa juga pake number
+```
 
 
 
