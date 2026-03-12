@@ -39,3 +39,4 @@
 * [Intro](testing-guide/intro.md)
 * [End To End Testing](testing-guide/end-to-end-testing.md)
 * [Unit Testing](testing-guide/unit-testing.md)
+* [WebDriver IO Selector Guide](testing-guide/webdriver-io-selector-guide.md)
