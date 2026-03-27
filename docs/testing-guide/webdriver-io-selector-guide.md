@@ -164,6 +164,21 @@ $('aria/Currency Value').setValue(100000) // Bisa juga pake number
 
 
 
+### Tag Type&#x20;
+
+Tag type ada RFID, NFC, QR.
+
+```typescript
+const tagTypeGroup = await $("aria/Tag Types");
+await tagTypeGroup.$('aria/RFID active')
+await tagTypeGroup.$('aria/QR inactive')
+await tagTypeGroup.$('aria/NFC active')
+```
+
+### Transaction Roles:
+
+###
+
 ### Scoping Aksi di Dialog
 
 Gunakan dialog title sebagai Accessibility ID. Berlaku di semua dialog, termasuk Dialog Confirmation.
