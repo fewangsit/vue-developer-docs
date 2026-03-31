@@ -12,10 +12,10 @@ Here’s an overview of the project structure:
   > components
     > commons
     > modules
-      > ExampleModule
+      > ModuleName
         > helpers
         > options
-        ExampleModuleComponent.vue
+        ModuleNameComponent.vue
   > layout
     ExampleLayout.vue
   > router
@@ -46,13 +46,13 @@ We store our assets like images and styles files here.
 
 Components stored in the commons directory are designed for widespread usage throughout the project. These are reusable components utilized in multiple locations.
 
-### 3. `components > modules > ExampleModule`
+### 3. `components > modules > ModuleName`
 
 This folder is designated for organizing components based on specific pages, menus, or functions. Components within this directory are grouped according to their association with particular pages, menus, or functionalities. This structuring approach makes it easier to locate and manage components within the context of their usage.
 
-Here `ExampleModule` is the name of the module and it can have another sub module with the same structure.
+Here `ModuleName`is the name of the module and it can have another sub module with the same structure. Module names shouldn't end with `Module`, and it should describe the contents of the module.
 
-### 4. `components > modules > ExampleModule > helpers`
+### 4. `components > modules > ModuleName> helpers`
 
 This folder contains function used by the components inside the module.
 
@@ -70,7 +70,7 @@ Below is the guidelines:
    Example: `export camelCase from 'camelCase.helper';`
 8. Import form helper on your component: `import { helperFunction } from './helpers'`
 
-### 5. `components > modules > ExampleModule > options`
+### 5. `components > modules > ModuleName > options`
 
 Within the `modules` directory, the `options` folder stores TypeScript files essential for the components. These files contain configurations and options necessary for the proper functioning of the associated components. We mainly store the filter options.
 
@@ -78,10 +78,10 @@ Within the `modules` directory, the `options` folder stores TypeScript files ess
 
 The `layout` folder contains Vue components that define the **overall page structure and navigation framework**. Layout components are responsible for:
 
-- Providing the main page structure (header, sidebar, footer, etc.)
-- Containing navigation elements (tab menus, breadcrumbs, main navigation)
-- Rendering `<router-view />` where view components are displayed
-- Managing layout-specific state and responsive behavior
+* Providing the main page structure (header, sidebar, footer, etc.)
+* Containing navigation elements (tab menus, breadcrumbs, main navigation)
+* Rendering `<router-view />` where view components are displayed
+* Managing layout-specific state and responsive behavior
 
 **Naming Convention:** Use `PascalCase` with the suffix `Layout` (e.g., `MainLayout.vue`, `SettingsLayout.vue`).
 
@@ -126,10 +126,10 @@ const tabMenus: MenuItem[] = [
 
 The `views` folder contains Vue components that serve as **route targets**. These are the components that Vue Router directly loads when navigating to specific URLs. View components should be lightweight and primarily responsible for:
 
-- Importing and composing module components from `components/modules/`
-- Handling route-specific logic (query parameters, route guards, etc.)
-- Managing page-level state and data fetching
-- Containing the specific content that renders within the layout structure
+* Importing and composing module components from `components/modules/`
+* Handling route-specific logic (query parameters, route guards, etc.)
+* Managing page-level state and data fetching
+* Containing the specific content that renders within the layout structure
 
 **Naming Convention:** Use `PascalCase` with the suffix `View` (e.g., `BrandView.vue`, `UserProfileView.vue`).
 
@@ -144,7 +144,7 @@ import { useBreadcrumbStore } from '@fewangsit/wangsvue';
 import type { BreadcrumbMenu } from '@fewangsit/wangsvue/breadcrumb';
 import { onMounted } from 'vue';
 
-import ExampleModule from '@/components/modules/ExampleModule/ExampleModule.vue';
+import ModuleName from '@/components/modules/ModuleName/ModuleName.vue';
 
 const { setBreadcrumbs } = useBreadcrumbStore();
 
@@ -163,7 +163,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ExampleModule />
+  <ModuleName />
 </template>
 ```
 
