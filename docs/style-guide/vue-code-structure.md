@@ -45,7 +45,7 @@ Group your code by type. Follow this structure:
 * Import order:
   * **Start with named imports**, followed by default imports.
   * **Separate named imports and default imports with an empty line**.
-  *   When the import statement spans multiple lines, **add a line break after the statement.**
+  * When the import statement spans multiple lines, **add a line break after the statement.**
 * Define Props, Emits, Models, Options, Slots if any.
 * Group Vue.js lifecycle hooks.
 
@@ -53,7 +53,7 @@ Group your code by type. Follow this structure:
 
 * Group Vue Router hooks.
 * Define the store, router, toast, and any other Vue plugin setup.
-* Group `interface`, `type`, `constants`, `shallowRef`, `ref`, `reactive`, `computed`, `inject`, and methods together. Separate each group with an empty line.
+* Group `interface`, `type`, `constants`, `shallowRef`, `ref`, `reactive`, `computed`, `inject`, and `methods` together. Separate each group with an empty line.
 * Define watchers.
 * `defineExpose` at the most bottom.
 
@@ -145,6 +145,8 @@ const COLUMNS: TableColumn[] = [
  * Defining inject, ref, reactive, computed, provide, and method. Separated by an empty line.
  */
 const injectedValue = inject(ExampleKey, defaultExampleValue);
+
+const dialogForm = useTemplateRef<DialogForm>('dialogForm');
   
 const componentName = shallowRef<string>('Component Name');
 const componentState = shallowRef<boolean>(false);
